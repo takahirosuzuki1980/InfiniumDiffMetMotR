@@ -1,0 +1,12 @@
+Package: InfiniumDiffMetMotR
+Type: Package
+Title: InfiniumDiffMetMotR
+Version: 0.1.0
+Author: Takahiro Suzuki
+Maintainer: The package maintainer <takahirosuzuki1980@gail.com>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+Depends: FDb.InfiniumMethylation.hg19, lumi, snow, Biostrings, ggplot2, reshape2, RColorBrewer
