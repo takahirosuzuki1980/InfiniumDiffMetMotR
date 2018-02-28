@@ -37,3 +37,9 @@ Example
 `DMP_IDs <- rownames(selDataMatrix )[diff_table]`  
 `nDMP_IDs <- length(DMP_IDs)`  
 `allProbe_IDs <- rownames(selDataMatrix)`  
+
+#### 3. Extraction of DMP positions and stratified sampling  
+`target_position <- probeID2position(DMP_IDs)`        #conversion of DMP IDs to position  
+`randomProbe_IDs <- stratSampling(DMP_IDs, allProbe_IDs)`        #stratified sampling for negative control  
+`random_position <- probeID2position(randomProbe_IDs)`        #conversion of NC probe IDs to position  
+`positionsList <- list("target" = target_position, "random" = random_position)`    #integrate DMP positoins and NC positions  
