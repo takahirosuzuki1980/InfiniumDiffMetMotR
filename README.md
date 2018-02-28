@@ -20,19 +20,21 @@ Example
 `motOrg <- values(motifDB)[,9]`  
 
 #### 2. Identification of differentially methylated regions  
-`infile <- sel_processed_Mval.txt`  
-`outname <-iPS-HPC_SPI1`  
-`ControlColnum <- 1`  
-`TreatmentColnum <- 11`  
-`MethylDemethyl <- "Demethyl"`  
+```
+infile <- sel_processed_Mval.txt
+outname <-iPS-HPC_SPI1
+ControlColnum <- 1
+TreatmentColnum <- 11
+MethylDemethyl <- "Demethyl"
 
-`selDataMatrix <- read.table (infile)`  
+selDataMatrix <- read.table (infile)  
 #extraction demethylated probes  
-    if((MethylDemethyl == "Demethyl") ||( MethylDemethyl == "D")) {
-    	diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) >=2)
-    }else if ((MethylDemethyl == "Methyl" )|| (MethylDemethyl == "M")){
-    	diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) <=-2) 
-    }
+if((MethylDemethyl == "Demethyl") ||( MethylDemethyl == "D")) {
+ diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) >=2)
+}else if ((MethylDemethyl == "Methyl" )|| (MethylDemethyl == "M")){
+ diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) <=-2) 
+}
+```
 
 `DMP_IDs <- rownames(selDataMatrix )[diff_table]`  
 `nDMP_IDs <- length(DMP_IDs)`  
