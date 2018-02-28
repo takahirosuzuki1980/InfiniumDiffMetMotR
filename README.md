@@ -5,7 +5,7 @@ This is a R package to analyze transcription factor binding motif enrichment for
 Example
 -------
 #### 1. motif database construction  
-`library("MotifDb")`
+`library("MotifDb")`  
 `targetDB <- "JASPAR_CORE"`  
 `targetORG <- c("Hsapiens", "Mmusculus")`  
 `targetTF <- "SPI1"`  
@@ -19,21 +19,21 @@ Example
 `motSource <- values(motifDB)[,3]`  
 `motOrg <- values(motifDB)[,9]`  
 
-#### 2. Identification of differentially methylated regions
-`infile <- sel_processed_Mval.txt`
-`outname <-iPS-HPC_SPI1`
-`ControlColnum <- 1`
-`TreatmentColnum <- 11`
-`MethylDemethyl <- "Demethyl"`
+#### 2. Identification of differentially methylated regions  
+`infile <- sel_processed_Mval.txt`  
+`outname <-iPS-HPC_SPI1`  
+`ControlColnum <- 1`  
+`TreatmentColnum <- 11`  
+`MethylDemethyl <- "Demethyl"`  
 
-`selDataMatrix <- read.table (infile)`
-#extraction demethylated probes
-`if((MethylDemethyl == "Demethyl") ||( MethylDemethyl == "D")) {`
-`	diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) >=2)`
-`}else if ((MethylDemethyl == "Methyl" )|| (MethylDemethyl == "M")){`
-`	diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) <=-2)`
-`}`
+`selDataMatrix <- read.table (infile)`  
+#extraction demethylated probes  
+`if((MethylDemethyl == "Demethyl") ||( MethylDemethyl == "D")) {`  
+`	diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) >=2)`  
+`}else if ((MethylDemethyl == "Methyl" )|| (MethylDemethyl == "M")){`  
+`	diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) <=-2)`  
+`}`  
 
-`DMP_IDs <- rownames(selDataMatrix )[diff_table]`
-`nDMP_IDs <- length(DMP_IDs)`
-`allProbe_IDs <- rownames(selDataMatrix)`
+`DMP_IDs <- rownames(selDataMatrix )[diff_table]`  
+`nDMP_IDs <- length(DMP_IDs)`  
+`allProbe_IDs <- rownames(selDataMatrix)`  
