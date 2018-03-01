@@ -11,14 +11,13 @@ stratSampling <- function(target_IDs, allProbe_IDs){	#stratified sampling based 
   ## identification of DMPs in each categolies
   CGI.probes <- subsetByOverlaps(probes, hg19.islands)	#identification of CGI DMPs
   shore.probes <- subsetByOverlaps(probes, hg19.shores)	#identification of shore DMPs
-    cat("9")
+  head(shore.probes)
+  head(CGI.probes)
   shore.probes <- shore.probes[!shore.probes %in% CGI.probes] #In case of overlap to two categolies, CGI is priolity
-    cat("10")
   ## number of DMPs in each categilies
   nCGI.probes <- length(CGI.probes)	#number of CGI DMPs
   nshore.probes <- length(shore.probes)	#number of shore DMPs
   nnonCGI.probes <- length(probes)-nCGI.probes-nshore.probes	#number of non-CGI/non-shore DMPs
-      cat("11")
   ##Categolization of all probes into the categolies
   CGI.ctrlProbeList <-names(subsetByOverlaps(all_probes, hg19.islands))	#identification of all CGI probes
   shore.ctrlProbeList <- names(subsetByOverlaps(all_probes, hg19.shores)) #identification of all shore probes
