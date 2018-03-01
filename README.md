@@ -30,7 +30,7 @@ motOrg <- values(motifDB)[,9]
 ```
 #### 2. Identification of differentially methylated regions  
 ```
-infile <- sel_processed_Mval.txt
+infile <- "sel_processed_Mval.txt"
 outname <-"iPS-HPC_SPI1"
 ControlColnum <- 20
 TreatmentColnum <- 11
