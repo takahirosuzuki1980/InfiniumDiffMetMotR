@@ -144,7 +144,7 @@ for (j in 1:length(target_positionsList)){
 	ranMotifCounts <- motifClassCount(motifPosi=ctrl_mot_posi, windowSize = windowSize, slide = slide, seq_range=seq_range) #counting of motifs
 
 	motif_counts_matrix <- NULL
-	motif_counts_matrix <- cbind(demethyMotifCounts[,2]+1, ranMotifCounts[[j]][,2]+1,
+	motif_counts_matrix <- cbind(demethyMotifCounts[,2]+1, ranMotifCounts[,2]+1,
 	((demethyMotifCounts[,2]+1)/(ranMotifCounts[,2]+1))) #data Matrix / to avoid lambda = 0 and FC=infnity add 1
 	rownames(motif_counts_matrix) = demethyMotifCounts[,1]
 
