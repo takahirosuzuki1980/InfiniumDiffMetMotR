@@ -1,9 +1,13 @@
 stratSampling <- function(target_IDs, allProbe_IDs){	#stratified sampling based on DMPs. categolies are CpG island, CpG shore and non-CGI/non-shore
   library("FDb.InfiniumMethylation.hg19")
   library("lumi")
+  cat("1")
   hm450 <- get450k()
+  cat("2")
   probes <- hm450[target_IDs]
+  cat("3")
   all_probes <- hm450[allProbe_IDs]
+  cat("4")
   ##Stratified sampling of same number of probes from ctrl probe list based on categolies of CGIs, shores, and non CGIs
   ##definition of CpG island and shore
   data(hg19.islands)
