@@ -174,7 +174,7 @@ for (j in 1:length(target_positionsList)){
 		par(new=T)
 		## if the adjested p-value is significant (p <= 0.00001), the plots turn to red
 		sigPois2 <- pois2[which(pois2 > 5)]
-		plot(as.numeric(names(sigPois2)), sigPois2, ylim=poisPylim, xlim=poisPxlim, ylab="", xlab="", main="", col="red", pch=21,cex.axis=0.7)
+		plot(as.numeric(names(sigPois2)), sigPois2, ylim=poisPylim, xlim=poisPxlim, ylab="", xlab="", main=main, col="red", pch=21,cex.axis=0.7)
 	}
 
 	## Extraction of significantly enriched ranges
