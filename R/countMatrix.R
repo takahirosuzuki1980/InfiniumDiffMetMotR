@@ -1,10 +1,10 @@
-countMatrix <- function(motifPosi=target_mot_posi, seq_range=seq_range, windowSize = 100, slide = 50){
+countMatrix <- function(target_mot_posi = target_mot_posi, ran_motifPosi = ctrl_mot_posi, seq_range=seq_range, windowSize = 100, slide = 50){
       ##motifClassCount returns frequencies of motif in a window based on windowSize and slide.
       ## motif counting
       windowSize <- windowSize  ##widow size
       slide <- slide	##slide
-      demethyMotifCounts <- motifClassCount(motifPosi=motifPosi, windowSize = windowSize, slide = slide, seq_range=seq_range) #counting of motifs
-      ranMotifCounts <- motifClassCount(motifPosi=motifPosi, windowSize = windowSize, slide = slide, seq_range=seq_range) #counting of motifs
+      demethyMotifCounts <- motifClassCount(motifPosi=target_mot_posi, windowSize = windowSize, slide = slide, seq_range=seq_range) #counting of motifs
+      ranMotifCounts <- motifClassCount(motifPosi=ctrl_mot_posi, windowSize = windowSize, slide = slide, seq_range=seq_range) #counting of motifs
       motif_counts_matrix <- NULL
       motif_counts_matrix <- cbind(demethyMotifCounts[,2]+1, ranMotifCounts[,2]+1,
       ((demethyMotifCounts[,2]+1)/(ranMotifCounts[,2]+1))) #data Matrix / to avoid lambda = 0 and FC=infnity add 1
