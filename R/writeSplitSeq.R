@@ -1,4 +1,4 @@
-writeSplitSeq <- function(seqs, split_num, output_file){
+writeSplitSeq <- function(seqs, split_num, tempDir=tempDir, output_file){
   n_target_seq <- length(seqs)
   ref_point <- 0
   all_filenames <- NULL
