@@ -1,4 +1,4 @@
-enrichScoreDist <- function(target_mot_posi, ctrl_mot_posi, seq_range=seq_range, plot_draw=TRUE){	#Plot of enrichment score and return enrichment scores
+enrichScoreDist <- function(target_mot_posi, ctrl_mot_posi, seq_range=seq_range,motif_name="", plot_draw=TRUE){	#Plot of enrichment score and return enrichment scores
   ## Input objects are motif position fils of 1)target and 2)control
   if((length(target_mot_posi != 0)) && (length(ctrl_mot_posi != 0))){
     ranks <- seq(seq_range[1], seq_range[2], length=1001)
@@ -36,7 +36,7 @@ enrichScoreDist <- function(target_mot_posi, ctrl_mot_posi, seq_range=seq_range,
       g <- g + ylab("Enrichment Score")
       #g <- g + guides(fill=guide_legend(title=NULL))
       g <- g + geom_hline(yintercept=0)
-      g <- g + ggtitle(paste(motGene[j], "(Enrichment Score)", sep=""))
+      g <- g + ggtitle(paste(motif_name, "(Enrichment Score)", sep=""))
       g <- g + theme(axis.text.x = element_text( color ="black",size=14), axis.text.y = element_text(color = "black", size=14), axis.ticks=element_line(color="black", size=.5), axis.title=element_text(color="black", size=14))
       g <- g + theme(panel.background=element_rect(fill="white", color=NA), panel.border=element_rect(fill=NA, color="black"), panel.grid.major=element_blank(), panel.grid.minor=element_blank())
       #g <- g + theme(legend.position=c(.85,.85))
