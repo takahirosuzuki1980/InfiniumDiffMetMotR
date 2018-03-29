@@ -1,4 +1,4 @@
-motHist <- function(target_mot_posi, ctrl_mot_posi, seq_range=seq_range){ #Vidualization by histgram
+motHist <- function(target_mot_posi, ctrl_mot_posi, seq_range=seq_range, motif_name=""){ #Vidualization by histgram
   ## Input objects are 1) motif position fils of target and 2)control
   if((length(target_mot_posi != 0)) && (length(ctrl_mot_posi != 0))){
     ##plot a histgram
