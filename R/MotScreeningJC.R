@@ -82,11 +82,11 @@ MotScreeningJC <- function(infile="sel_processed_Mval.txt", outname="screening_r
 
 	  ## histogram plot
 	  cat("Step 1 / Plot Histgram (Figure 1)......\n")
-	  motHist (target_mot_posi, ctrl_mot_posi, seq_range=seq_range)
+	  motHist(target_mot_posi, ctrl_mot_posi, seq_range=seq_range, motif_name=motif_name)
 	  ## motif enrichment score plot
 
 	  cat("Step 2 / Plot Enrichment Score (Figure 2)......\n")
-	  enrichment_scores <- enrichScoreDist (target_mot_posi, ctrl_mot_posi, seq_range=seq_range, plot_draw=TRUE)
+	  enrichment_scores <- enrichScoreDist(target_mot_posi, ctrl_mot_posi, seq_range=seq_range, motif_name=motif_name, plot_draw=TRUE)
 
 	  cat("Step 3 / Creating a count.pvalue Matrix ......\n")
 	  windowSize <- 100
