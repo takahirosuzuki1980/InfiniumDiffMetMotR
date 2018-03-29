@@ -1,12 +1,16 @@
 MotScreeningJC <- function(infile="sel_processed_Mval.txt", outname="screening_result", ControlColnum, TreatmentColnum, MethylDemethyl="Demethyl"){
+	cat("Motif list construction......\n")
 	library("MotifDb")
 	targetDB <- "JASPAR_CORE"
 	targetORG <- c("Hsapiens", "Mmusculus")
 	motifDB <- query(MotifDb, targetDB)        #extraction of motif list of "JASPER_CORE"
 	motifDB <- c(query(motifDB,targetORG[1]),query(motifDB,targetORG[2]))        #extraction of motifs of "Hsapiens" and "Mmusclus"		
 	motifDBList <- as.list(motifDB)
+	motGene <- values(motifDB)[,4]
 
-	selDataMatrix <- read.table (infile)  
+	cat("Reading data......\n")
+	selDataMatrix <- read.table (infile)
+	cat("DMP identification......\n")  
 	#extraction demethylated probes  
 	if((MethylDemethyl == "Demethyl") ||( MethylDemethyl == "D")) {
 	 diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) >=2)
@@ -29,7 +33,7 @@ MotScreeningJC <- function(infile="sel_processed_Mval.txt", outname="screening_r
 	genome <- eval(parse(text=tmp))
 
 	## sequence extraction
-	cat("Retreave the sequences\n")
+	cat("Retreave the sequences......\n")
 
 	seq_range <- c(-5000, 5000) #range from the CpG position to be extracted
 	sequences <- lapply(positionsList , function(x){seqExtract(positions = x, genome = genome, seq_range)})
@@ -47,6 +51,7 @@ MotScreeningJC <- function(infile="sel_processed_Mval.txt", outname="screening_r
 	rm(seqs)
 	invisible(replicate(3, gc()))
 
+	cat("motif search...,,,\n")
 	## ((multi-fasta file(multi-seqs) x motif) x [motif number])) x [multi-fasta file number]
 	target_positionsList <- splitSeqMotDist(filenames=target_all_filenames,  motif_list=motifDBList)
 	ntarget_hits <- lapply(target_positionsList, function(x){
@@ -104,7 +109,6 @@ MotScreeningJC <- function(infile="sel_processed_Mval.txt", outname="screening_r
 	}
 	dev.off()
 
-	motGene <- values(motifDB)[,4]
 	motID <- values(motifDB)[,2]
 	motSource <- values(motifDB)[,3]
 	motOrg <- values(motifDB)[,9]
@@ -119,3 +123,4 @@ MotScreeningJC <- function(infile="sel_processed_Mval.txt", outname="screening_r
 	Mad3ResultOut <- paste(Sys.Date(),'_',outname,'_mot_analysis_result.txt', sep="")
 	write.table (finOut, file=Mad3ResultOut, sep="\t", quote=F, row.names=F)
 }
+
