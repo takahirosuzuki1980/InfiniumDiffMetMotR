@@ -44,9 +44,9 @@ MotScreeningJC <- function(infile="sel_processed_Mval.txt", outname="screening_r
 
 	##writing the sequences to splitted files
 	seqs <- sequences$target
-	target_all_filenames <- writeSplitSeq (seqs=seqs, split_num = 2500, output_file="target" )
+	target_all_filenames <- writeSplitSeq (seqs=seqs, split_num = 2500, tempDir=tempDir, output_file="target" )
 	seqs <- sequences$random
-	random_all_filenames <- writeSplitSeq (seqs=seqs, split_num = 2500, output_file="random" )
+	random_all_filenames <- writeSplitSeq (seqs=seqs, split_num = 2500, tempDir=tempDir, output_file="random" )
 	rm(sequences)
 	rm(seqs)
 	invisible(replicate(3, gc()))
