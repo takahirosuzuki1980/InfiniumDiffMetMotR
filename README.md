@@ -141,7 +141,7 @@ for (j in 1:length(target_positionsList)){
 dev.off()
 ```
 
-### 8.Result output
+### 8. Result output
 ```
 motGene <- values(motifDB)[,4]
 motID <- values(motifDB)[,2]
