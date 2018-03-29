@@ -21,13 +21,7 @@ motifDB <- c(query(motifDB,targetORG[1]),query(motifDB,targetORG[2]))        #ex
 motifDB <- query(motifDB,targetTF)       #Extraction of motifs for target TF(s)
 motifDBList <- as.list(motifDB)
 ```
-##discription of motifs
-```
-motGene <- values(motifDB)[,4]
-motID <- values(motifDB)[,2]
-motSource <- values(motifDB)[,3]
-motOrg <- values(motifDB)[,9]
-```
+
 #### 2. Identification of differentially methylated regions  
 ```
 infile <- "sel_processed_Mval.txt"
@@ -147,7 +141,12 @@ for (j in 1:length(target_positionsList)){
 dev.off()
 
 
-##Result output
+### 8.Result output
+```
+motGene <- values(motifDB)[,4]
+motID <- values(motifDB)[,2]
+motSource <- values(motifDB)[,3]
+motOrg <- values(motifDB)[,9]
 finOut <- cbind(motGene,
 motID,
 motSource,
