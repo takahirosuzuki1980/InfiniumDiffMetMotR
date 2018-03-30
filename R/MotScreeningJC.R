@@ -5,7 +5,7 @@ MotScreeningJC <- function(infile="sel_processed_Mval.txt", outname="screening_r
 	targetORG <- c("Hsapiens", "Mmusculus")
 	motifDB <- query(MotifDb, targetDB)        #extraction of motif list of "JASPER_CORE"
 	motifDB <- c(query(motifDB,targetORG[1]),query(motifDB,targetORG[2]))        #extraction of motifs of "Hsapiens" and "Mmusclus"
-	motifDB <- motifDB[1:10]
+	motifDB <- motifDB[1:4]
 	motifDBList <- as.list(motifDB)
 	motGene <- values(motifDB)[,4]
 
@@ -91,7 +91,7 @@ MotScreeningJC <- function(infile="sel_processed_Mval.txt", outname="screening_r
 
 	  cat("Step 3 / Creating a count.pvalue Matrix ......\n")
 	  windowSize <- 100
-	  motif_counts_matrix <- countMatrix(target_mot_posi = target_mot_posi, ran_motifPosi = ctrl_mot_posi, seq_range=seq_range, windowSize = windowSize, slide = 50)
+	  motif_counts_matrix <- countMatrix(target_mot_posi = target_mot_posi, ctrl_mot_posi = ctrl_mot_posi, seq_range=seq_range, windowSize = windowSize, slide = 50)
 
 	  if((length(target_mot_posi != 0)) && (length(ctrl_mot_posi != 0))){
 	     cat("Step 4 / Visualization of FC (Figure 3)......\n")
