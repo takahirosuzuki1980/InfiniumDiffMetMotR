@@ -105,7 +105,7 @@ MotScreeningJC <- function(infile="sel_processed_Mval.txt", outname="screening_r
 	  significant_ranges <- SigRange(motif_counts_matrix = motif_counts_matrix, cutoff = 0.00001, windowSize = windowSize)
 	  cat("Step 7 / Significance test......\n")
 
-	  parameters <- enrichTest(significant_ranges = significant_ranges, motif_counts_matrix = motif_counts_matrix, seq_range=seq_range, enrichment_scores=enrichment_scores)
+	  parameters <- enrichTest(significant_ranges = significant_ranges, motif_counts_matrix = motif_counts_matrix, seq_range=seq_range, enrichment_scores=enrichment_scores,windowSize=windowSize)
 	  parameter_matrix <- rbind(parameter_matrix, parameters)
 	}
 	dev.off()
