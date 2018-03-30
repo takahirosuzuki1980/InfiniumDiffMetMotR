@@ -21,7 +21,7 @@ enrichScoreDist <- function(target_mot_posi, ctrl_mot_posi, seq_range=seq_range,
       library(reshape2)
       library(RColorBrewer)
 
-      main<-paste(motGene[j], "(mixture distribution)", sep="") #main title
+      main<-paste(motif_name, "(mixture distribution)", sep="") #main title
       data <- as.matrix(enrichment_scores)
       rownames(data) <- ranks
       colnames(data ) <- "ES"
