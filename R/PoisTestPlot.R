@@ -1,4 +1,5 @@
-PoisTestPlot <- function(Pvals = motif_counts_matrix[,4],  motif_name = motif_name, seq_range = seq_range){
+PoisTestPlot <- function(motif_counts_matrix = motif_counts_matrix,  motif_name = motif_name, seq_range = seq_range){
+   Pvals <- motif_counts_matrix[,4]
    pois2 <- -log10(Pvals)
    pois2 <- replace (pois2, which(pois2 == Inf), 500) #In the case of adjusted P-value=0, relace infinity to 500
    poisPylim <- c(0, max(pois2)*1.1) #y max of the plot area
