@@ -98,7 +98,7 @@ MotScreeningJC <- function(infile="sel_processed_Mval.txt", outname="screening_r
 	     FCChangePlot(motif_name = motif_name, motif_counts_matrix = motif_counts_matrix)
 
 	     cat("Step 5 / Poisson disribution model exact test (Figure 4)......\n")
-	     PoisTestPlot(motif_name = motif_name, seq_range = seq_range)
+	     PoisTestPlot(motif_counts_matrix = motif_counts_matrix, motif_name = motif_name, seq_range = seq_range)
 	  }
 	 
 	  cat("Step 6 / Extraction of significantly enriched ranges......\n")
