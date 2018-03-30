@@ -1,4 +1,4 @@
-enrichScoreDist <- function(target_mot_posi, ctrl_mot_posi, seq_range=seq_range,motif_name="", plot_draw=TRUE){	#Plot of enrichment score and return enrichment scores
+enrichScoreDist <- function(target_mot_posi, ctrl_mot_posi, seq_range=seq_range,motif_name="", nDMP_IDs=nDMP_IDs, plot_draw=TRUE){	#Plot of enrichment score and return enrichment scores
   ## Input objects are motif position fils of 1)target and 2)control
   if((length(target_mot_posi != 0)) && (length(ctrl_mot_posi != 0))){
     ranks <- seq(seq_range[1], seq_range[2], length=1001)
