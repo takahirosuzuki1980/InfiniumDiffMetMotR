@@ -5,7 +5,6 @@ MotScreeningJC <- function(infile="sel_processed_Mval.txt", outname="screening_r
 	targetORG <- c("Hsapiens", "Mmusculus")
 	motifDB <- query(MotifDb, targetDB)        #extraction of motif list of "JASPER_CORE"
 	motifDB <- c(query(motifDB,targetORG[1]),query(motifDB,targetORG[2]))        #extraction of motifs of "Hsapiens" and "Mmusclus"
-	motifDB <- motifDB[1:4]
 	motifDBList <- as.list(motifDB)
 	motGene <- values(motifDB)[,4]
 
