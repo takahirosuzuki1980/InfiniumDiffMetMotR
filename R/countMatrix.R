@@ -1,4 +1,4 @@
-countMatrix <- function(target_mot_posi = target_mot_posi, ran_motifPosi = ctrl_mot_posi, seq_range=seq_range, windowSize = 100, slide = 50){
+countMatrix <- function(target_mot_posi = target_mot_posi, ctrl_mot_posi = ctrl_mot_posi, seq_range=seq_range, windowSize = 100, slide = 50){
       ##motifClassCount returns frequencies of motif in a window based on windowSize and slide.
       ## motif counting
       windowSize <- windowSize  ##widow size
