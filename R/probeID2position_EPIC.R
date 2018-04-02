@@ -1,4 +1,4 @@
-probeID2position_EPIC <- function (probe_IDs){ #conversion from illumina humanEPIC methylation array ID to genomic position (R version 3.2 or later)
+probeID2position_EPIC <- function (probe_IDs, EPICanno = EPICanno){ #conversion from illumina humanEPIC methylation array ID to genomic position (R version 3.2 or later)
   ##conversion of target probe IDs to positions
   probes <- probe_IDs
   CHR37 <- as.vector (EPICanno[which(EPICanno[,1]%in% probes), "CHR"])
