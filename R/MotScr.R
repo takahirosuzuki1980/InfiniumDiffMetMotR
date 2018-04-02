@@ -11,22 +11,17 @@ MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, o
 	}else if ((MethylDemethyl == "Methyl" )||(MethylDemethyl == "M")){
 		diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) <=-2) 
 	}
-	cat("test1\n")
 	DMP_IDs <- rownames(selDataMatrix )[diff_table]
 	nDMP_IDs <- length(DMP_IDs)
 	allProbe_IDs <- rownames(selDataMatrix)
-	cat("test2\n")
 	if(version=="450"){
 		target_position <- probeID2position(DMP_IDs)        #conversion of DMP IDs to position
 		randomProbe_IDs <- stratSampling(DMP_IDs, allProbe_IDs)        #stratified sampling for negative control
 		random_position <- probeID2position(randomProbe_IDs)        #conversion of NC probe IDs to position
 		positionsList <- list("target" = target_position, "random" = random_position)    #integrate DMP positoins and NC positions
-	cat3("test4\n")
 	}else if ((version=="EPIC")||(version=="850")){
 		target_position <- probeID2position_EPIC(probe_IDs=DMP_IDs, EPICanno=EPICanno)	#conversion of DMP IDs to position
-		cat("test5\n")
 		randomProbe_IDs  <- stratSampling_EPIC(target_IDs=DMP_IDs, allProbe_IDs=allProbe_IDs, EPICanno=EPICanno)	#stratified sampling for negative control
-		cat("test6\n")
 		random_position<- probeID2position_EPIC(probe_IDs=randomProbe_IDs, EPICanno=EPICanno)	#conversion of NC probe IDs to position
 		positionsList <- list("target" = target_position, "random" = random_position)	#integrate DMP positoins and NC positions
 	}
