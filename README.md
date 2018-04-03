@@ -8,6 +8,14 @@ Last Update: 2018-3-01
 
 Updated by : takahiro.suzuki.aa@riken.jp
 
+Install
+-------
+```
+install.packages("devtools")
+require(devtools)
+install_github("takahirosuzuki1980/InfiniumDiffMetMotR")
+```
+
 Example
 -------
 #### 1. motif database construction  
