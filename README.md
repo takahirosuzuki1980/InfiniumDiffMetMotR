@@ -2,7 +2,7 @@ InfiniumDiffMetMotR
 ===================
 Version: 1.0
 
-Description: This is a R package to analyze transcription factor binding motif enrichment for differentially methylated regions.  
+Description: This is a R package to analyze transcription factor binding motif enrichment at differentially methylated regions for Infinium Methylation BeadChip (Illumina).  
 
 Last Update: 2018-3-01
 
