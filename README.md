@@ -37,11 +37,11 @@ MotScr(infile="sel_processed_Mval.txt", motifDBList = motifDBList, cutoff=2, out
 ```
 infile: M-value matrix of infinium methylation array  
 motifDBList: list. Each factor is PWM as fllowing format;  
-  1 2 3         4         5         6          7          8          9  
-A 0 0 0 0.1189189 0.1027027 0.2972973 0.28648649 0.10270270 0.04864865  
-C 0 1 1 0.3837838 0.3081081 0.2378378 0.16216216 0.08648649 0.42162162  
-G 1 0 0 0.2486486 0.3297297 0.3621622 0.49189189 0.74054054 0.42702703  
-T 0 0 0 0.2486486 0.2594595 0.1027027 0.05945946 0.07027027 0.10270270  
+    1     2    3    4    5    6    7    8    9  
+A    0    0    0    0.1189189    0.1027027    0.2972973    0.28648649    0.10270270    0.04864865  
+C    0    1    1    0.3837838    0.3081081    0.2378378    0.16216216    0.08648649    0.42162162  
+G    1    0    0    0.2486486    0.3297297    0.3621622    0.49189189    0.74054054    0.42702703  
+T    0    0    0    0.2486486    0.2594595    0.1027027    0.05945946    0.07027027    0.10270270  
 cutoff: cutoff velue of delta M.  
 outname: name of output file  
 ControlColnum: A column of control data, such as unddiferentiated.  
