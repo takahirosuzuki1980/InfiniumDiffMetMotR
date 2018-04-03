@@ -1,4 +1,4 @@
-MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, outname="screening_result", ControlColnum, TreatmentColnum, MethylDemethyl="Demethyl", version = "450"){
+MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, cutoff = 2, outname="screening_result", ControlColnum, TreatmentColnum, MethylDemethyl="Demethyl", version = "450"){
 	#This function is a pipline to analyze enrichment of given motif PWMs in differentially methylated probes of illumina arrays.
 
 	cat("Reading data...\n")
@@ -7,9 +7,9 @@ MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, o
 	cat("DMP identification...\n")  
 	#extraction demethylated probes  
 	if((MethylDemethyl == "Demethyl") ||( MethylDemethyl == "D")) {
-		diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) >=2)
+		diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) >= cutoff)
 	}else if ((MethylDemethyl == "Methyl" )||(MethylDemethyl == "M")){
-		diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) <=-2) 
+		diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) <=-cutoff) 
 	}
 	DMP_IDs <- rownames(selDataMatrix )[diff_table]
 	nDMP_IDs <- length(DMP_IDs)
