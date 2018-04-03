@@ -25,7 +25,7 @@ lumiMethyNorm(fileName = "TableControl.txt", sample_names = sample_names)
 input unnourmalized-no background correction full infinium methylation array data.  
 The header of the data should includes the following items as the following formats;  
   
-#TargetID    Sample1.Signal_A    Sample1.Signal_B    Sample1.Detection Pval  
+# TargetID    Sample1.Signal_A    Sample1.Signal_B    Sample1.Detection Pval  
   
 TargetID: Illumina ID
 Sample1.Signal_A: Signal of Unmethylated probe of sample 1  
