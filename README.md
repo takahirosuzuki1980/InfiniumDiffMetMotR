@@ -31,7 +31,7 @@ The header of the data should includes the following items as the following form
   
 **TargetID    Sample1.Signal_A    Sample1.Signal_B    Sample1.Detection Pval**  
   
-TargetID: Illumina ID
+TargetID: Illumina ID  
 Sample1.Signal_A: Signal of Unmethylated probe of sample 1  
 Sample1.Signal_B: Signal of Methylated probe of sample 1  
 Sample1.Detection Pval: detection P value of sample 1  
