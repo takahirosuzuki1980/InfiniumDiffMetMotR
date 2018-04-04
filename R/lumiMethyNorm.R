@@ -2,19 +2,17 @@ lumiMethyNorm <- function(fileName = "TableControl.txt", sample_names = sample_n
 	################ ライブラリーを読み込み #########################
 	library(lumi)
 	library(annotate)
+	library(FDb.InfiniumMethylation.hg19)
 	############### データの読み込み #############################
 	data.lumiMethy <- lumiMethyR(fileName)
 	addAnnotationInfo(data.lumiMethy, lib = 'FDb.InfiniumMethylation.hg19', annotationColumn=c('COLOR_CHANNEL', 'CHROMOSOME', 'POSITION'))
-	sampleNames(data.lumiMethy)<- sample_names                                  #convert the sampleID to sample name
-
-
+	sampleNames(data.lumiMethy) <- sample_names	#convert the sampleID to sample name
 	############### 必要なら###################################
 	dir.create("Process_Result")                                   #make a directory to store processing results
 	##PCA plot
 	pdf("Process_Result/pca.pdf")
 	plotSampleRelation(data.lumiMethy, method='mds', cv.Th=0)
 	dev.off()
-
 	################# Color balance adjustment between two color channels ###########################
 	lumiMethy.c.adj <- lumiMethyC(data.lumiMethy)
 	## Check color balance after color balance adjustment
