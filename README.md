@@ -24,6 +24,7 @@ Example
 -------
 #### 1. Normalization  
 ```
+library(InfiniumDiffMetMotR)  
 lumiMethyNorm(fileName = "TableControl.txt", sample_names = sample_names)
 ```
 input unnourmalized-no background correction full infinium methylation array data.  
@@ -38,25 +39,27 @@ Sample1.Detection Pval: detection P value of sample 1
   
 sample_names: vector of sample names  
   
+lumiMethyNorm generates Process_Result folder: reports of the normalization, processed_Mval.txt: a matrix of M-value, and sel_processed_Mval.txt: a matrix of M-value which does not inculude low detection p-value probes. (default cut off is 0.01)  
+  
 #### 2. motif database construction  
+**Example: JASPER_CORE, Hsapiencs and Mmusclus**
 ```
 library("MotifDb")
 targetDB <- "JASPAR_CORE"
 targetORG <- c("Hsapiens", "Mmusculus")
-targetTF <- "SPI1"
 motifDB <- query(MotifDb, targetDB)        #extraction of motif list of "JASPER_CORE"
 motifDB <- c(query(motifDB,targetORG[1]),query(motifDB,targetORG[2]))        #extraction of motifs of "Hsapiens" and "Mmusclus"
+```
+If you want analyze a specific motif select a motif. (ex. SPI1)
+```
+targetTF <- "SPI1"
 motifDB <- query(motifDB,targetTF)       #Extraction of motifs for target TF(s)
+```
+Finally, convert the motif list to list format.
+```
 motifDBList <- as.list(motifDB)
 ```
-
-#### 3. Screening of enriched motifs  
-```
-library(InfiniumDiffMetMotR)
-MotScr(infile="sel_processed_Mval.txt", motifDBList = motifDBList, cutoff = 2, p.cutoff = 0.001, outname="screening_result", ControlColnum=c(1,2), TreatmentColnum=c(3,4), MethylDemethyl="Demethyl", version = "850")
-```
-infile: M-value matrix of infinium methylation array  
-motifDBList: list. Each factor is PWM as the following format;  
+Motif list should be a list of PWM of following format;  
   
    1     2    3    4    5    6    7    8    9  
 A    0    0    0    0.1189189    0.1027027    0.2972973    0.28648649    0.10270270    0.04864865  
@@ -64,7 +67,14 @@ C    0    1    1    0.3837838    0.3081081    0.2378378    0.16216216    0.08648
 G    1    0    0    0.2486486    0.3297297    0.3621622    0.49189189    0.74054054    0.42702703  
 T    0    0    0    0.2486486    0.2594595    0.1027027    0.05945946    0.07027027    0.10270270  
   
-cutoff: cutoff velue of delta M.  
+ 
+#### 3. Screening of enriched motifs  
+```
+MotScr(infile="sel_processed_Mval.txt", motifDBList = motifDBList, cutoff = 2, p.cutoff = 0.001, outname="screening_result", ControlColnum=c(1,2), TreatmentColnum=c(3,4), MethylDemethyl="Demethyl", version = "850")
+```
+infile: M-value matrix of infinium methylation array  
+motifDBList: list format of PWM  
+cutoff: cutoff velue of delta M  
 outname: name of output file  
 ControlColnum: A column of control data, such as unddiferentiated.  
 TreatmentColnum: A column of treatment data such as differentiated.  
