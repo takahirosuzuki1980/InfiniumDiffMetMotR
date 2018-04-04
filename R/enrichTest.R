@@ -10,7 +10,7 @@ enrichTest <- function(significant_ranges = significant_ranges, motif_counts_mat
    	centSigRangeInd <- NULL
    }
    if(length(centSigRangeInd) != 0){
-      cat ("**Poison Test: Significant**\n\n")
+      cat ("    ----Poison Test: Significant----\n\n")
    	## Max value (FC) in the center peak
    	rowNoMaxClass <- which(motif_counts_matrix[,3] == max(motif_counts_matrix[which(as.numeric(rownames(motif_counts_matrix)) >= centSigRange[1] & as.numeric(rownames(motif_counts_matrix)) <= centSigRange[2]),3]))  #row index of max FC
    	if( length(rowNoMaxClass) > 1){ ## if the min Pvalue is not single, adopt a class which is the closest to 0
@@ -42,7 +42,7 @@ enrichTest <- function(significant_ranges = significant_ranges, motif_counts_mat
    	}
    }else{
    	##case of no center peak
-      cat ("**Poison Test: Insignificant**\n\n")
+      cat ("    ----Poison Test: Insignificant----\n\n")
    	poisPvals <- min(motif_counts_matrix[which(as.numeric(rownames(motif_counts_matrix)) > (0-(windowSize/2)) & as.numeric(rownames(motif_counts_matrix)) < (0+(windowSize/2))),4])  #put min P of cnter window
    	poispeakPosiEvals <- "Not-Overlapped" #Judgement of center peak
    	maxClass <- "NA"
