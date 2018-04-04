@@ -48,7 +48,6 @@ MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, c
 	file.remove(target_all_filenames)
 	cat("motif search for background regions...\n")
 	random_positionsList <- splitSeqMotDist(filenames=random_all_filenames,  motif_list=motifDBList)
-	nrandom_hits <- lapply(random_positionsList, function(x){length(unlist(x))})
 	file.remove(random_all_filenames)
 	file.remove(tempDir)
 	gc()
@@ -104,5 +103,6 @@ MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, c
 	##out put file name setting
 	Mad3ResultOut <- paste(Sys.Date(),'_',outname,'_mot_analysis_result.txt', sep="")
 	write.table (finOut, file=Mad3ResultOut, sep="\t", quote=F, row.names=F)
+	save(positionsList, target_positionsList, random_positionsList, file="result.RData")
 	cat("Completed!!\n")
 }
