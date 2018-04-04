@@ -4,6 +4,7 @@ lumiMethyNorm <- function(fileName = "TableControl.txt", sample_names = sample_n
 	library(annotate)
 	library(FDb.InfiniumMethylation.hg19)
 	############### データの読み込み #############################
+	cat("Reading data ...\n")
 	data.lumiMethy <- lumiMethyR(fileName)
 	addAnnotationInfo(data.lumiMethy, lib = 'FDb.InfiniumMethylation.hg19', annotationColumn=c('COLOR_CHANNEL', 'CHROMOSOME', 'POSITION'))
 	sampleNames(data.lumiMethy) <- sample_names	#convert the sampleID to sample name
