@@ -39,7 +39,7 @@ Sample1.Detection Pval: detection P value of sample 1
   
 sample_names: vector of sample names  
   
-lumiMethyNorm generates Process_Result folder: reports of the normalization, processed_Mval.txt: a matrix of M-value, and sel_processed_Mval.txt: a matrix of M-value which does not inculude low detection p-value probes. (default cut off is 0.01)  
+lumiMethyNorm generates **Process_Result folder**: reports of the normalization, **processed_Mval.txt**: a matrix of M-value, and **sel_processed_Mval.txt**: a matrix of M-value which does not inculude low detection p-value probes. (default cut off is 0.01)  
   
 #### 2. motif database construction  
 **Example: JASPER_CORE, Hsapiencs and Mmusclus**
