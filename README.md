@@ -59,7 +59,7 @@ Finally, convert the motif list to list format.
 ```
 motifDBList <- as.list(motifDB)
 ```
-Motif list should be a list of PWM of following format;  
+Motif list should be a list of PWMs of following format;  
   
    1     2    3    4    5    6    7    8    9  
 A    0    0    0    0.1189189    0.1027027    0.2972973    0.28648649    0.10270270    0.04864865  
