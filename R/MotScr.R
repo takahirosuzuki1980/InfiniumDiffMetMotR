@@ -48,6 +48,7 @@ MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, c
 	file.remove(target_all_filenames)
 	cat("motif search for background regions...\n")
 	random_positionsList <- splitSeqMotDist(filenames=random_all_filenames,  motif_list=motifDBList)
+	nrandom_hits <- lapply(random_positionsList, function(x){length(unlist(x))})
 	file.remove(random_all_filenames)
 	file.remove(tempDir)
 	gc()
