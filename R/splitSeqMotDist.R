@@ -4,7 +4,7 @@ splitSeqMotDist <- function(filenames,  motif_list){ #Splitted seqs are sequenti
   names (target_positionsList) <- names(motif_list)
   count <- 1
   for (i in filenames){ #read the multi-fasta file names one by one
-    sto <- paste(i," is processing......", count, "/",length(filenames), "\n", sep="")
+    sto <- paste("    ",i," is processing......", count, "/",length(filenames), "\n", sep="")
     cat(sto)
     fasta2 <- readDNAStringSet(i)	#read the multi-fasta file as DNAStringSet
     target_posi_subList <- pblapply(motif_list, function(x){motifDistMultiSeqs(motif = x, fasta2 = fasta2)})	#target_posi_subList is a list of lists of identified motif positions in a region for each motif.
@@ -13,7 +13,7 @@ splitSeqMotDist <- function(filenames,  motif_list){ #Splitted seqs are sequenti
     }
     count <- count+1
     rm(fasta2)
-    cat("Done...\n")
+    cat("    Done...\n")
   }
   return(target_positionsList)
 }
