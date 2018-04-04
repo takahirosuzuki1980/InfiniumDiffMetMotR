@@ -1,17 +1,11 @@
-MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, cutoff = 2, outname="screening_result", ControlColnum, TreatmentColnum, MethylDemethyl="Demethyl", version = "450"){
+MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, cutoff = 2, p.cutoff = 0.001, outname="screening_result", ControlColnum, TreatmentColnum, MethylDemethyl="Demethyl", version = "450"){
 	#This function is a pipline to analyze enrichment of given motif PWMs in differentially methylated probes of illumina arrays.
 
 	cat("Reading data...\n")
 	selDataMatrix <- read.table (infile)
 
-	cat("DMP identification...\n")  
-	#extraction demethylated probes  
-	if((MethylDemethyl == "Demethyl") ||( MethylDemethyl == "D")) {
-		diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) >= cutoff)
-	}else if ((MethylDemethyl == "Methyl" )||(MethylDemethyl == "M")){
-		diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) <=-cutoff) 
-	}
-	DMP_IDs <- rownames(selDataMatrix )[diff_table]
+	cat("DMP identification...\n")
+	DMP_IDs <- DmpId(selDataMatrix=selDataMatrix, ControlColnum = ControlColnum, TreatmentColnum = TreatmentColnum, p.cutoff=p.cutoff, cutoff= cutoff, MethylDemethyl=MethylDemethyl)
 	nDMP_IDs <- length(DMP_IDs)
 	allProbe_IDs <- rownames(selDataMatrix)
 	if(version=="450"){
@@ -47,18 +41,19 @@ MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, c
 	rm(seqs)
 	invisible(replicate(3, gc()))
 
-	cat("motif search...\n")
+	cat("motif search for target regions...\n")
 	## ((multi-fasta file(multi-seqs) x motif) x [motif number])) x [multi-fasta file number]
 	target_positionsList <- splitSeqMotDist(filenames=target_all_filenames,  motif_list=motifDBList)
 	ntarget_hits <- lapply(target_positionsList, function(x){length(unlist(x))})
 	file.remove(target_all_filenames)
-
+	cat("motif search for background regions...\n")
 	random_positionsList <- splitSeqMotDist(filenames=random_all_filenames,  motif_list=motifDBList)
 	nrandom_hits <- lapply(random_positionsList, function(x){length(unlist(x))})
 	file.remove(random_all_filenames)
 	file.remove(tempDir)
 	gc()
-
+	
+	cat("Plotting the results...\n\n")
 	##Plot output setting
 	distPlotFile <- paste(outname,'_plot.pdf', sep="") ##output file name setting
 	pdf(distPlotFile)
