@@ -26,7 +26,7 @@ DmpId <- function(selDataMatrix=selDataMatrix, ControlColnum = ControlColnum, Tr
 		}
 		DMP_IDs <- rownames(selDataMatrix)[diff_table]
 	}
-	nDMPs <- paste(length(DMP_IDs), " DMPs identified", sep="")
-	cat("nDMPs\n")
+	nDMPs <- paste(length(DMP_IDs), " DMPs identified", "\n", sep="")
+	cat(nDMPs)
 	return(DMP_IDs)
 }
