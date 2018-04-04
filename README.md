@@ -53,7 +53,7 @@ motifDBList <- as.list(motifDB)
 #### 3. Screening of enriched motifs  
 ```
 library(InfiniumDiffMetMotR)
-MotScr(infile="sel_processed_Mval.txt", motifDBList = motifDBList, cutoff=2, outname="screening_result", ControlColnum=1, TreatmentColnum=2, MethylDemethyl="Demethyl", version = "EPIC")
+MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, cutoff = 2, p.cutoff = 0.001, outname="screening_result", ControlColnum, TreatmentColnum, MethylDemethyl="Demethyl", version = "850"){
 ```
 infile: M-value matrix of infinium methylation array  
 motifDBList: list. Each factor is PWM as the following format;  
