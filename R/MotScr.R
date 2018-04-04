@@ -100,7 +100,7 @@ MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, c
 	dev.off()
 
 	cat("Result table writing...\n")
-	finOut <- cbind(motGene, ntarget_hits, nrandom_hits, parameter_matrix)
+	finOut <- cbind(names(motifDBList), ntarget_hits, nrandom_hits, parameter_matrix)
 	##out put file name setting
 	Mad3ResultOut <- paste(Sys.Date(),'_',outname,'_mot_analysis_result.txt', sep="")
 	write.table (finOut, file=Mad3ResultOut, sep="\t", quote=F, row.names=F)
