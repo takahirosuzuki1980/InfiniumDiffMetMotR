@@ -9,4 +9,4 @@ Description: More about what it does (maybe more than one line)
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
-Depends: FDb.InfiniumMethylation.hg19, lumi, snow, Biostrings, ggplot2, reshape2, RColorBrewer, lumi, annotate
+Depends: FDb.InfiniumMethylation.hg19, lumi, snow, Biostrings, ggplot2, reshape2, RColorBrewer, lumi, annotate, pbapply, BSgenome.Hsapiens.UCSC.hg19
