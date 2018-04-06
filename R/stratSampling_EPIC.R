@@ -15,11 +15,11 @@ stratSampling_EPIC <- function(target_IDs, EPICanno=EPICanno){	#stratified sampl
 
 
   ## identification of DMPs in each categolies (TSS, CpG Island, CpG Shore, others)
-  TSS.probes <- Target_IDs %in% all.TSS.probes  #identification of TSS DMPs
-  CGI.probes <- Target_IDs %in% all.CGI.probes	#identification of CGI DMPs within non-TSS probes
-  shore.probes <- Target_IDs %in% all.shore.probes	#identification of shore DMPs within non-TSS probes
-  shelf.probes <- Target_IDs %in% all.shelf.probes #
-  other.probes <- Target_IDs %in% all.other.probes  #identification of non-TSS, non-CGI, non-shore probes
+  TSS.probes <- target_IDs %in% all.TSS.probes  #identification of TSS DMPs
+  CGI.probes <- target_IDs %in% all.CGI.probes	#identification of CGI DMPs within non-TSS probes
+  shore.probes <- target_IDs %in% all.shore.probes	#identification of shore DMPs within non-TSS probes
+  shelf.probes <- target_IDs %in% all.shelf.probes #
+  other.probes <- target_IDs %in% all.other.probes  #identification of non-TSS, non-CGI, non-shore probes
 
   ## number of DMPs in each categilies
   nTSS.probes <- length(TSS.probes) #number of CGI DMPs
