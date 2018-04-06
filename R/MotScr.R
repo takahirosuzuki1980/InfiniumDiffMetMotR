@@ -14,9 +14,9 @@ MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, c
 		random_position <- probeID2position(randomProbe_IDs)        #conversion of NC probe IDs to position
 		positionsList <- list("target" = target_position, "random" = random_position)    #integrate DMP positoins and NC positions
 	}else if ((version=="EPIC")||(version=="850")){
-		target_position <- probeID2position_EPIC(probe_IDs=DMP_IDs, EPICanno=EPICanno)	#conversion of DMP IDs to position
+		target_position <- na.omit(probeID2position_EPIC(probe_IDs=DMP_IDs, EPICanno=EPICanno))	#conversion of DMP IDs to position
 		randomProbe_IDs  <- stratSampling_EPIC(target_IDs=DMP_IDs, EPICanno=EPICanno)	#stratified sampling for negative control
-		random_position<- probeID2position_EPIC(probe_IDs=randomProbe_IDs, EPICanno=EPICanno)	#conversion of NC probe IDs to position
+		random_position<- na.omit(probeID2position_EPIC(probe_IDs=randomProbe_IDs, EPICanno=EPICanno))	#conversion of NC probe IDs to position
 		positionsList <- list("target" = target_position, "random" = random_position)	#integrate DMP positoins and NC positions
 	}
 
