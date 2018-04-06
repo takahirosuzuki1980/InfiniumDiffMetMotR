@@ -1,4 +1,4 @@
-stratSampling_EPIC <- function(target_IDs, allProbe_IDs, EPICanno=EPICanno, CpGislands=CpGislands, TSSs=TSSs){	#stratified sampling based on DMPs. categolies are CpG island, CpG shore and non-CGI/non-shore
+stratSampling_EPIC_3 <- function(target_IDs, allProbe_IDs, EPICanno=EPICanno, CpGislands=CpGislands, TSSs=TSSs){	#stratified sampling based on DMPs. categolies are CpG island, CpG shore and non-CGI/non-shore
   library("FDb.InfiniumMethylation.hg19")
 
   selEPICanno <- cbind(EPICanno[,c("CHR","MAPINFO","MAPINFO", "IlmnID")],
