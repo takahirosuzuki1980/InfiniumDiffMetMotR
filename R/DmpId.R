@@ -21,6 +21,10 @@ DmpId <- function(selDataMatrix=selDataMatrix, ControlColnum = ControlColnum, Tr
 	}else{
 		cat("　　　Use dlta M\n")
 		if((MethylDemethyl == "Demethyl") ||( MethylDemethyl == "D")) {
+			cat (ControlColnum)
+			cat ("\t")
+			cat(TreatmentColnum)
+			cat("\t")
 			diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) >= cutoff)
 		}else if ((MethylDemethyl == "Methyl" )||(MethylDemethyl == "M")){
 			diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) <=-cutoff) 
