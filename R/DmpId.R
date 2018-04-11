@@ -21,7 +21,7 @@ DmpId <- function(selDataMatrix=selDataMatrix, ControlColnum = ControlColnum, Tr
 	}else{
 		cat("　　　Use dlta M\n")
 		if((MethylDemethyl == "Demethyl") ||( MethylDemethyl == "D")) {
-			hoge <- colnames(selDataMatrix)
+			hoge <- head(selDataMatrix[,1])
 			cat(hoge)
 			cat("\n")
 			diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) >= cutoff)
