@@ -2,7 +2,6 @@ DmpId <- function(selDataMatrix=selDataMatrix, ControlColnum = ControlColnum, Tr
 	if((length(ControlColnum) > 1)||(length(TreatmentColnum) > 1)){
 		## In the case of comparison of muliple samples, run statistical test (welch t test)
 		cat("　　　　Use Welch's T-test & dlta M\n")
-		selDataMatrix <- as.matrix(selDataMatrix)
 		library("snow")
 		cl <- makeCluster(16,type="SOCK")
 		clusterExport(cl, "selDataMatrix", envir=environment())
@@ -21,9 +20,6 @@ DmpId <- function(selDataMatrix=selDataMatrix, ControlColnum = ControlColnum, Tr
 	}else{
 		cat("　　　Use dlta M\n")
 		if((MethylDemethyl == "Demethyl") ||( MethylDemethyl == "D")) {
-			hoge <- head(selDataMatrix[,1])
-			cat(hoge)
-			cat("\n")
 			diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) >= cutoff)
 		}else if ((MethylDemethyl == "Methyl" )||(MethylDemethyl == "M")){
 			diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) <=-cutoff) 
