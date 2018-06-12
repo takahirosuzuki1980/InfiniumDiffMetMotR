@@ -103,7 +103,8 @@ MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, c
 	finOut <- cbind(names(motifDBList), ntarget_hits, nrandom_hits, parameter_matrix)
 	##out put file name setting
 	Mad3ResultOut <- paste(Sys.Date(),'_',outname,'_mot_analysis_result.txt', sep="")
+	Mad3ResultOutR <- paste(outname,'_result.RData', sep="")
 	write.table (finOut, file=Mad3ResultOut, sep="\t", quote=F, row.names=F)
-	save(positionsList, target_positionsList, random_positionsList, file="result.RData")
+	save(positionsList, target_positionsList, random_positionsList, file=Mad3ResultOutR)
 	cat("Completed!!\n")
 }
