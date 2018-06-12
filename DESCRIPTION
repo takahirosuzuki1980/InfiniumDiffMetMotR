@@ -1,7 +1,7 @@
 Package: InfiniumDiffMetMotR
 Type: Package
 Title: InfiniumDiffMetMotR
-Version: 0.1.2
+Version: 1.2.1
 Author: Takahiro Suzuki
 Maintainer: The package maintainer <takahirosuzuki1980@gail.com>
 Description: More about what it does (maybe more than one line)
