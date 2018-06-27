@@ -5,5 +5,6 @@ probeID2position_EPIC <- function (probe_IDs, EPICanno = EPICanno){ #conversion 
   CHR37 <- paste("chr", CHR37, sep="")
   CPG37 <- as.vector (EPICanno[which(EPICanno[,1] %in% probes), "MAPINFO"])
   positions <- cbind(CHR37, CPG37)
+  rownames(positions) <- probes
   return(positions)
 }
