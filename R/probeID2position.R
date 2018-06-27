@@ -5,5 +5,6 @@ probeID2position <- function (probe_IDs, Methyl450anno = Methyl450anno){ #conver
   CHR37 <- paste("chr", CHR37, sep="")
   CPG37 <- as.vector (Methyl450anno[which(Methyl450anno[,1] %in% probes), "MAPINFO"])
   positions <- cbind(CHR37, CPG37)
+  rownames(positions) <- probes
   return(positions)
 }
