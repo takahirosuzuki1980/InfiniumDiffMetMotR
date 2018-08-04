@@ -1,38 +1,40 @@
-stratSampling <- function(target_IDs, allProbe_IDs){	#stratified sampling based on DMPs. categolies are CpG island, CpG shore and non-CGI/non-shore
-  library("FDb.InfiniumMethylation.hg19")
-  library("lumi")
-  hm450 <- get450k()
-  probes <- hm450[target_IDs]
-  all_probes <- hm450[allProbe_IDs]
-  ##Stratified sampling of same number of probes from ctrl probe list based on categolies of CGIs, shores, and non CGIs
-  ##definition of CpG island and shore
-  data(hg19.islands)
-  hg19.shores <- c(flank(hg19.islands, 2000, start=TRUE),flank(hg19.islands, 2000, start=FALSE))	#definign of shores (defined as 2kb up/down stream from CGI)
-  ## identification of DMPs in each categolies
-  CGI.probes <- subsetByOverlaps(probes, hg19.islands)	#identification of CGI DMPs
-  shore.probes <- subsetByOverlaps(probes, hg19.shores)	#identification of shore DMPs
-  shore.probes <- shore.probes[!shore.probes %in% CGI.probes] #In case of overlap to two categolies, CGI is priolity
-
-  ## number of DMPs in each categilies
-  nCGI.probes <- length(CGI.probes)	#number of CGI DMPs
-  nshore.probes <- length(shore.probes)	#number of shore DMPs
-  nnonCGI.probes <- length(probes)-nCGI.probes-nshore.probes	#number of non-CGI/non-shore DMPs
-
-  ##Categolization of all probes into the categolies
-  CGI.ctrlProbeList <-names(subsetByOverlaps(all_probes, hg19.islands))	#identification of all CGI probes
-  shore.ctrlProbeList <- names(subsetByOverlaps(all_probes, hg19.shores)) #identification of all shore probes
-  shore.ctrlProbeList <- shore.ctrlProbeList[!shore.ctrlProbeList %in%CGI.ctrlProbeList]#In case of overlap to two categolies, CGI is priolity
-  nonCGI.ctrlProbeList <- setdiff(setdiff(allProbe_IDs, names(CGI.ctrlProbeList)), names(shore.ctrlProbeList))	#identification of all no-CGI/non-shore probes
+stratSampling <- function(target_IDs, Methyl450anno=Methyl450anno){	#stratified sampling based on DMPs. categolies are CpG island, CpG shore and non-CGI/non-shore
+ ##Categolization of all probes into the categolies
+  all.TSS.probes <- as.vector(Methyl450anno[unique(c(grep("TSS200", Methyl450anno[,"UCSC_RefGene_Group"]), grep("5'UTR", Methyl450anno[,"UCSC_RefGene_Group"]))),"IlmnID"])#identification of all TSS probes
+  all.nonTSS <- Methyl450anno[!(Methyl450anno[,"IlmnID"] %in% all.TSS.probes),]
+  all.CGI.probes <- as.vector(all.nonTSS[grep("Island", all.nonTSS[,"Relation_to_UCSC_CpG_Island"]),"IlmnID"])#identification of all CGI probes
+  all.shore.probes <- as.vector(all.nonTSS[grep("Shore", all.nonTSS[,"Relation_to_UCSC_CpG_Island"]),"IlmnID"]) #identification of all shore probes
+  all.shelf.probes <- as.vector(all.nonTSS[grep("Shelf", all.nonTSS[,"Relation_to_UCSC_CpG_Island"]),"IlmnID"]) #identification of all shelf probes
+  all.other.probes <- setdiff(setdiff(setdiff(setdiff(Methyl450anno[,"IlmnID"],all.TSS.probes), all.CGI.probes), all.shore.probes),all.shelf.probes)  #identification of all non-TSS, non-CGI, non-shore probes
 
   ##number of probes in each categolies
-  nCGI.ctrlProbeList <- length(CGI.ctrlProbeList) #number of all CGI probes
-  nshore.ctrlProbeList <- length(shore.ctrlProbeList)	#number of all shore probes
-  nnonCGI.ctrlProbeList <- length (nonCGI.ctrlProbeList)	#number of all non-CGI/non-shore/probes
+  nall.TSS.probes <- length(all.TSS.probes) #number of all CGI probes
+  nall.CGI.probes <- length(all.CGI.probes) #number of all CGI probes
+  nall.shore.probes <- length(all.shore.probes) #number of all shore probes
+  nall.shelf.probes <- length(all.shelf.probes) #number of all shelf probes
+  nall.other.probes <- length (all.other.probes)  #number of all non-CGI/non-shore/probes
+
+
+  ## identification of DMPs in each categolies (TSS, CpG Island, CpG Shore, others)
+  TSS.probes <- target_IDs[target_IDs %in% all.TSS.probes]  #identification of TSS DMPs
+  CGI.probes <- target_IDs[target_IDs %in% all.CGI.probes]	#identification of CGI DMPs within non-TSS probes
+  shore.probes <- target_IDs[target_IDs %in% all.shore.probes]	#identification of shore DMPs within non-TSS probes
+  shelf.probes <- target_IDs[target_IDs %in% all.shelf.probes] #identification of shelf DMPs within non-TSS probes
+  other.probes <- target_IDs[target_IDs %in% all.other.probes]  #identification of non-TSS, non-CGI, non-shore probes
+
+  ## number of DMPs in each categilies
+  nTSS.probes <- length(TSS.probes) #number of CGI DMPs
+  nCGI.probes <- length(CGI.probes)	#number of CGI DMPs
+  nshore.probes <- length(shore.probes)	#number of shore DMPs
+  nshelf.probes <- length(shelf.probes) #number of shore DMPs
+  nnonCGI.probes <- length(other.probes)	#number of non-CGI/non-shore DMPs
 
   ##ramdom sampling from each categolies
-  CGI.runProbeList <- CGI.ctrlProbeList[floor(runif(nCGI.probes, 1 ,nCGI.ctrlProbeList))]	#random sampling from CGI probes
-  shore.runProbeList <- shore.ctrlProbeList[floor(runif(nshore.probes, 1 ,nshore.ctrlProbeList))]	#random sampling from shre probes
-  nonCGI.runProbeList <- nonCGI.ctrlProbeList[floor(runif(nnonCGI.probes, 1 ,nnonCGI.ctrlProbeList))] 	#random sampling from non-CGI/nin-shore probes
-  runProbeList <- c(CGI.runProbeList, shore.runProbeList, nonCGI.runProbeList)
-  return (runProbeList)
+  run.TSS.probes <- all.TSS.probes[floor(runif(nTSS.probes, 1, nall.TSS.probes))] #TSS probes
+  run.CGI.probes <- all.CGI.probes[floor(runif(nCGI.probes, 1 ,nall.CGI.probes))]	#CGI probes
+  run.shore.probes <- all.shore.probes[floor(runif(nshore.probes, 1 ,nall.shore.probes))]	#shore probes
+  run.shelf.probes <- all.shore.probes[floor(runif(nshelf.probes, 1 ,nall.shelf.probes))] #shelf probes
+  run.other.probes <- all.other.probes[floor(runif(nnonCGI.probes, 1 ,nall.other.probes))] 	#other probes
+  run.probes <- c(run.TSS.probes, run.CGI.probes, run.shore.probes, run.shelf.probes, run.other.probes)
+  return (run.probes)
 }
