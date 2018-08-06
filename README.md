@@ -30,7 +30,12 @@ install_github("takahirosuzuki1980/InfiniumDiffMetMotR")
 
 Example
 -------
-#### 1. Normalization  
+#### 1. Load of InfiniumDiffMetMotR
+```
+library("InfiniumDiffMetMotR")
+```
+
+#### 2. Normalization  
 ```
 library(InfiniumDiffMetMotR)  
 lumiMethyNorm(fileName = "TableControl.txt", sample_names = sample_names)
@@ -49,7 +54,7 @@ sample_names: vector of sample names
   
 lumiMethyNorm generates **Process_Result folder**: reports of the normalization, **processed_Mval.txt**: a matrix of M-value, and **sel_processed_Mval.txt**: a matrix of M-value which does not inculude low detection p-value probes. (default cut off is 0.01)  
   
-#### 2. motif database construction  
+#### 3. motif database construction  
 **Example 1: JASPER_CORE, Hsapiencs and Mmusclus**
 ```
 library("MotifDb")
@@ -80,7 +85,7 @@ G    1    0    0    0.2486486    0.3297297    0.3621622    0.49189189    0.74054
 T    0    0    0    0.2486486    0.2594595    0.1027027    0.05945946    0.07027027    0.10270270  
   
  
-#### 3. Screening of enriched motifs  
+#### 4. Screening of enriched motifs  
 ```
 MotScr(infile="sel_processed_Mval.txt", motifDBList = motifDBList, cutoff = 2, p.cutoff = 0.001, outname="screening_result", ControlColnum=c(1,2), TreatmentColnum=c(3,4), MethylDemethyl="Demethyl", version = "850")
 ```
