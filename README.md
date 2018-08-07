@@ -20,6 +20,7 @@ source("https://bioconductor.org/biocLite.R")
 biocLite("FDb.InfiniumMethylation.hg19")
 biocLite("lumi")
 biocLite("Biostrings")
+biocLite("BSgenome.Hsapiens.UCSC.hg19")
 ```
 Install of InfiniumDiffMetMotR from github
 ```
@@ -74,7 +75,7 @@ motifDBList <- as.list(motifDB)
 ```
 **Example 2: IMAGE motif database**
 ```
-motifDBList <- IMAGE_PWMs()
+motifDBList <- IMAGE_PWMlist
 ```
 Motif list should be a list of PWMs of following format;  
   
