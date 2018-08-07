@@ -1,7 +1,7 @@
 DmpId <- function(selDataMatrix=selDataMatrix, ControlColnum = ControlColnum, TreatmentColnum = TreatmentColnum, p.cutoff=p.cutoff, cutoff= cutoff, MethylDemethyl=MethylDemethyl){ 
 	if((length(ControlColnum) > 1)||(length(TreatmentColnum) > 1)){
 		## In the case of comparison of muliple samples, run statistical test (welch t test)
-		cat("　　　　Use Welch's T-test & dlta M\n")
+		cat("\tUse Welch's T-test & dlta M\n")
 		library("snow")
 		cl <- makeCluster(16,type="SOCK")
 		clusterExport(cl, "selDataMatrix", envir=environment())
@@ -18,7 +18,7 @@ DmpId <- function(selDataMatrix=selDataMatrix, ControlColnum = ControlColnum, Tr
 		}
 		DMP_IDs <- t.sigIDs[t.sigIDs %in% diffIDs]
 	}else{
-		cat("　　　Use dlta M\n")
+		cat("\tUse dlta M\n")
 		if((MethylDemethyl == "Demethyl") ||( MethylDemethyl == "D")) {
 			diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) >= cutoff)
 		}else if ((MethylDemethyl == "Methyl" )||(MethylDemethyl == "M")){
@@ -26,7 +26,7 @@ DmpId <- function(selDataMatrix=selDataMatrix, ControlColnum = ControlColnum, Tr
 		}
 		DMP_IDs <- rownames(selDataMatrix)[diff_table]
 	}
-	nDMPs <- paste(length(DMP_IDs), " DMPs identified", "\n", sep="")
+	nDMPs <- paste("\t<", length(DMP_IDs), " DMPs identified>", "\n", sep="")
 	cat(nDMPs)
 	return(DMP_IDs)
 }
