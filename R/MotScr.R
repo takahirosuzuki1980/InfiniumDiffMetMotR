@@ -14,9 +14,9 @@ MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, c
 		random_position<- na.omit(probeID2position(probe_IDs=randomProbe_IDs, Methyl450anno=Methyl450anno))	#conversion of NC probe IDs to position
 		positionsList <- list("target" = target_position, "random" = random_position)    #integrate DMP positoins and NC positions
 	}else if ((version=="EPIC")||(version=="850")){
-		target_position <- na.omit(probeID2position_EPIC(probe_IDs=DMP_IDs, EPICanno=EPICanno))	#conversion of DMP IDs to position
+		target_position <- na.omit(probeID2position(probe_IDs=DMP_IDs, anno_info=EPICanno))	#conversion of DMP IDs to position
 		randomProbe_IDs  <- stratSampling_EPIC(target_IDs=DMP_IDs, EPICanno=EPICanno)	#stratified sampling for negative control
-		random_position<- na.omit(probeID2position_EPIC(probe_IDs=randomProbe_IDs, EPICanno=EPICanno))	#conversion of NC probe IDs to position
+		random_position<- na.omit(probeID2position(probe_IDs=randomProbe_IDs, anno_info=EPICanno))	#conversion of NC probe IDs to position
 		positionsList <- list("target" = target_position, "random" = random_position)	#integrate DMP positoins and NC positions
 	}
 
@@ -41,12 +41,13 @@ MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, c
 	rm(seqs)
 	invisible(replicate(3, gc()))
 
-	cat("motif search for target regions...\n")
+	cat(paste("motif serch: Total ", length(motifDBList), " motifs" sep=""))
+	cat("\n\tTarget regions...\n")
 	## ((multi-fasta file(multi-seqs) x motif) x [motif number])) x [multi-fasta file number]
 	target_positionsList <- splitSeqMotDist(filenames=target_all_filenames,  motif_list=motifDBList)
 	ntarget_hits <- lapply(target_positionsList, function(x){length(unlist(x))})
 	file.remove(target_all_filenames)
-	cat("motif search for background regions...\n")
+	cat("\tbackground regions...\n")
 	random_positionsList <- splitSeqMotDist(filenames=random_all_filenames,  motif_list=motifDBList)
 	nrandom_hits <- lapply(random_positionsList, function(x){length(unlist(x))})
 	file.remove(random_all_filenames)
@@ -102,9 +103,9 @@ MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, c
 	cat("Result table writing...\n")
 	finOut <- cbind(names(motifDBList), ntarget_hits, nrandom_hits, parameter_matrix)
 	##out put file name setting
-	Mad3ResultOut <- paste(Sys.Date(),'_',outname,'_mot_analysis_result.txt', sep="")
-	Mad3ResultOutR <- paste(outname,'_result.RData', sep="")
-	write.table (finOut, file=Mad3ResultOut, sep="\t", quote=F, row.names=F)
-	save(positionsList, target_positionsList, random_positionsList, file=Mad3ResultOutR)
+	ResultOut <- paste(outname,'_mot_analysis_result.txt', sep="")
+	ResultOutR <- paste(outname,'_result.RData', sep="")
+	write.table (finOut, file=ResultOut, sep="\t", quote=F, row.names=F)
+	save(positionsList, target_positionsList, random_positionsList, file=ResultOutR)
 	cat("Completed!!\n")
 }
