@@ -41,7 +41,7 @@ MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, c
 	rm(seqs)
 	invisible(replicate(3, gc()))
 
-	cat(paste("motif serch: Total ", length(motifDBList), " motifs" sep=""))
+	cat(paste("motif serch: Total ", length(motifDBList), " motifs", sep=""))
 	cat("\n\tTarget regions...\n")
 	## ((multi-fasta file(multi-seqs) x motif) x [motif number])) x [multi-fasta file number]
 	target_positionsList <- splitSeqMotDist(filenames=target_all_filenames,  motif_list=motifDBList)
