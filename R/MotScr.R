@@ -9,9 +9,9 @@ MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, c
 	nDMP_IDs <- length(DMP_IDs)
 	allProbe_IDs <- rownames(selDataMatrix)
 	if(version=="450"){
-		target_position <- na.omit(probeID2position(probe_IDs=DMP_IDs,Methyl450anno=Methyl450anno))	#conversion of DMP IDs to position
+		target_position <- na.omit(probeID2position(probe_IDs=DMP_IDs,anno_info=Methyl450anno))	#conversion of DMP IDs to position
 		randomProbe_IDs  <- stratSampling(target_IDs=DMP_IDs, Methyl450anno=Methyl450anno)	#stratified sampling for negative control
-		random_position<- na.omit(probeID2position(probe_IDs=randomProbe_IDs, Methyl450anno=Methyl450anno))	#conversion of NC probe IDs to position
+		random_position<- na.omit(probeID2position(probe_IDs=randomProbe_IDs, anno_info=Methyl450anno))	#conversion of NC probe IDs to position
 		positionsList <- list("target" = target_position, "random" = random_position)    #integrate DMP positoins and NC positions
 	}else if ((version=="EPIC")||(version=="850")){
 		target_position <- na.omit(probeID2position(probe_IDs=DMP_IDs, anno_info=EPICanno))	#conversion of DMP IDs to position
