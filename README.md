@@ -77,6 +77,11 @@ motifDBList <- as.list(motifDB)
 ```
 motifDBList <- IMAGE_PWMlist
 ```
+If you want to extract the motif of interest (e.g. SPI1):
+```
+motif_names <- "SPI1"
+motifDBList <- motifDBList[grep(motif_names,names(motifDBList))]
+```
 Motif list should be a list of PWMs of following format;  
   
    1     2    3    4    5    6    7    8    9  
