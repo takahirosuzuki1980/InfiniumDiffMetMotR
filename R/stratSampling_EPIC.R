@@ -1,3 +1,8 @@
+
+
+
+
+
 stratSampling_EPIC <- function(target_IDs, EPICanno=EPICanno){	#stratified sampling based on DMPs. categolies are CpG island, CpG shore and non-CGI/non-shore
  ##Categolization of all probes into the categolies
   all.TSS.probes <- as.vector(EPICanno[unique(c(grep("TSS200", EPICanno[,"UCSC_RefGene_Group"]), grep("5'UTR", EPICanno[,"UCSC_RefGene_Group"]))),"IlmnID"])#identification of all TSS probes
