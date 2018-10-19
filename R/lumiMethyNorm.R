@@ -1,15 +1,15 @@
 lumiMethyNorm <- function(fileName = "TableControl.txt", sample_names = sample_names){
-	################ ライブラリーを読み込み #########################
+	################ libraries #########################
 	library(lumi)
 	library(annotate)
 	library(FDb.InfiniumMethylation.hg19)
-	############### データの読み込み #############################
+	############### data input #############################
 	cat("Reading data ...\n")
 	data.lumiMethy <- lumiMethyR(fileName)
 	addAnnotationInfo(data.lumiMethy, lib = 'FDb.InfiniumMethylation.hg19', annotationColumn=c('COLOR_CHANNEL', 'CHROMOSOME', 'POSITION'))
 	sampleNames(data.lumiMethy) <- sample_names	#convert the sampleID to sample name
-	############### 必要なら###################################
-	dir.create("Process_Result")	#make a directory to store processing results
+	############### PCA plot ###################################
+	dir.create("Process_Result")    #make a directory to store the processing results
 	##PCA plot
 	pdf("Process_Result/pca.pdf")
 	plotSampleRelation(data.lumiMethy, method='mds', cv.Th=0)
@@ -19,10 +19,10 @@ lumiMethyNorm <- function(fileName = "TableControl.txt", sample_names = sample_n
 	## Check color balance after color balance adjustment
 	pdf("Process_Result/col.adj.pdf")
 	par(mfrow=c(2,2))
-	plotColorBias1D(data.lumiMethy, channel='sum')	#density plot of raw
-	boxplotColorBias(data.lumiMethy, channel='sum')	#boxplot of raw
-	plotColorBias1D(lumiMethy.c.adj, channel='sum')	#density plot of adjusted
-	boxplotColorBias(lumiMethy.c.adj, channel='sum')	#box plot of adjusted
+	plotColorBias1D(data.lumiMethy, channel='sum')    #density plot of raw
+	boxplotColorBias(data.lumiMethy, channel='sum')    #boxplot of raw
+	plotColorBias1D(lumiMethy.c.adj, channel='sum')    #density plot of adjusted
+	boxplotColorBias(lumiMethy.c.adj, channel='sum')    #box plot of adjusted
 	dev.off()
 	############################### Normalization###############################
 	## Perform SSN normalization based on color balance adjusted data
