@@ -1,4 +1,7 @@
 lumiMethyNorm <- function(fileName = "TableControl.txt", sample_names = sample_names){
+	##fileName: file name of raw methylation array data
+	##sample_names: vector of sample names
+	
 	################ libraries #########################
 	library(lumi)
 	library(annotate)
