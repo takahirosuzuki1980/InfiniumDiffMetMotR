@@ -104,5 +104,5 @@ TreatmentColnum: A column of treatment data such as differentiated.
 MethylDemethyl: "Methyl" (or "M") or "dimethyl (or"D").analysis target of differentially methylated probes.  
 version: "450" or "EPIC" (or "850"). version of methylation array.  
   
-If you perform a comparison of multiple samples, identification of differentially methylated probes uses both Welch's t-test and M-value difference. For single sample comparison, it uses only M-value difference.
+If you perform a comparison of multiple samples, identification of differentially methylated probes uses both Welch's t-test and M-value difference. For single sample comparison, it uses only M-value difference (delta M).
 
