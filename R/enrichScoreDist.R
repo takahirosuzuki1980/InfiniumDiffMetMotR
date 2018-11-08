@@ -6,7 +6,7 @@ enrichScoreDist <- function(target_mot_posi, ctrl_mot_posi, seq_range=seq_range,
 
     ## Use clusters (multiple CPUs)
     library("snow")
-    cl <- makeCluster(16,type="SOCK")
+    cl <- makeCluster(4,type="SOCK")
     clusterExport(cl, "enrichScore", envir=environment())
     clusterExport(cl, "ranks", envir=environment())
     clusterExport(cl, "target_mot_posi",  envir=environment())
