@@ -8,3 +8,12 @@
 - Conversion of duplicated probeIDs to position is available. (ProbeID2positon.R)
 - dependecy of packages was fixed.
 - Date was removed from output file.
+
+## [1.4] - 2018-11-09
+### Added
+- sampling option
+- Output of aignificantly enriched motif plots to a directory
+
+### Fixed
+- Numer of core to be used has been changed from 16 to 4.
+
