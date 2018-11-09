@@ -1,4 +1,4 @@
-enrichScoreDist <- function(target_mot_posi, ctrl_mot_posi, seq_range=seq_range,motif_name="", nDMP_IDs=nDMP_IDs, plot_draw=TRUE){	#Plot of enrichment score and return enrichment scores
+enrichScoreDist <- function(target_mot_posi, ctrl_mot_posi, seq_range=seq_range,motif_name="", nDMP_IDs=nDMP_IDs, outname=outname, plot_draw=TRUE){	#Plot of enrichment score and return enrichment scores
   ## Input objects are motif position fils of 1)target and 2)control
   if((length(target_mot_posi != 0)) && (length(ctrl_mot_posi != 0))){
     ranks <- seq(seq_range[1], seq_range[2], length=1001)
@@ -43,6 +43,11 @@ enrichScoreDist <- function(target_mot_posi, ctrl_mot_posi, seq_range=seq_range,
       #g <- g + theme(legend.background=element_rect(fill="white"))
       g <- g + theme ()
       plot(g)
+
+      sigPlotFile <- paste(outname,'_sig_plots/',motif_name,'.pdf', sep="") ##output file name setting
+	    pdf(file.path(sigPlotFile))
+      plot(g)
+      dev.off()
     }
     return(enrichment_scores) #returen the result of moxiture distribution
   }

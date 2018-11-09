@@ -1,4 +1,4 @@
-MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, cutoff = 2, p.cutoff = 0.001, outname="screening_result", ControlColnum, TreatmentColnum, MethylDemethyl="Demethyl", version = "450"){
+MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, cutoff = 2, p.cutoff = 0.001, outname="screening_result", ControlColnum, TreatmentColnum, MethylDemethyl="Demethyl", version = "450", sampling = FALSE){
 	#This function is a pipline to analyze enrichment of given motif PWMs in differentially methylated probes of illumina arrays.
 
 	cat("Reading data...\n")
@@ -6,6 +6,9 @@ MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, c
 
 	cat("DMP identification...\n")
 	DMP_IDs <- DmpId(selDataMatrix=selDataMatrix, ControlColnum = ControlColnum, TreatmentColnum = TreatmentColnum, p.cutoff=p.cutoff, cutoff= cutoff, MethylDemethyl=MethylDemethyl)
+	if(!sampling == FALSE & length(DMP_IDs) >= sampling){ ##fast option: sampling of 300 DMPs
+		DMP_IDs <- DMP_IDs[floor(runif(sampling,1,length(DMP_IDs)))]
+	}
 	nDMP_IDs <- length(DMP_IDs)
 	allProbe_IDs <- rownames(selDataMatrix)
 	if(version=="450"){
@@ -51,13 +54,14 @@ MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, c
 	random_positionsList <- splitSeqMotDist(filenames=random_all_filenames,  motif_list=motifDBList)
 	nrandom_hits <- lapply(random_positionsList, function(x){length(unlist(x))})
 	file.remove(random_all_filenames)
-	file.remove(tempDir)
 	gc()
 	
 	cat("Plotting the results...\n")
 	##Plot output setting
 	distPlotFile <- paste(outname,'_plot.pdf', sep="") ##output file name setting
 	pdf(distPlotFile)
+	sigPlotDir <- paste(outname,'_sig_plots', sep="")
+	ifelse(!dir.exists(sigPlotDir), dir.create(sigPlotDir), FALSE) # make a directory for significantly enriched motifs
 	parameter_matrix <- NULL
 	All_motif_names <- names(motifDBList)
 
@@ -77,7 +81,7 @@ MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, c
 		## motif enrichment score plot
 
 		cat("    Step 2 / Plot Enrichment Score (Figure 2)...\n")
-		enrichment_scores <- enrichScoreDist(target_mot_posi, ctrl_mot_posi, seq_range=seq_range, motif_name=motif_name, nDMP_IDs=nDMP_IDs, plot_draw=TRUE)
+		enrichment_scores <- enrichScoreDist(target_mot_posi, ctrl_mot_posi, seq_range=seq_range, motif_name=motif_name, nDMP_IDs=nDMP_IDs, outname=outname, plot_draw=TRUE)
 
 		cat("    Step 3 / Creating a count.pvalue Matrix...\n")
 		windowSize <- 100
@@ -96,6 +100,9 @@ MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, c
 
 		cat("    Step 7 / Significance test...\n")
 		parameters <- enrichTest(significant_ranges = significant_ranges, motif_counts_matrix = motif_counts_matrix, seq_range=seq_range, enrichment_scores=enrichment_scores,windowSize=windowSize)
+		ifelse(!parameters["peak.Test"] == "significant" &  file.exists(paste(outname,'_sig_plots/',motif_name,'.pdf', sep="")),
+		file.remove(paste(outname,'_sig_plots/', motif_name,'.pdf',
+		sep="")), FALSE)   ##remove the sig_plot_file if enrichment is not significant
 		parameter_matrix <- rbind(parameter_matrix, parameters)
 	}
 	dev.off()
@@ -107,5 +114,6 @@ MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, c
 	ResultOutR <- paste(outname,'_result.RData', sep="")
 	write.table (finOut, file=ResultOut, sep="\t", quote=F, row.names=F)
 	save(positionsList, target_positionsList, random_positionsList, file=ResultOutR)
+	file.remove(tempDir)
 	cat("Completed!!\n")
 }

@@ -37,8 +37,10 @@ enrichTest <- function(significant_ranges = significant_ranges, motif_counts_mat
    	## main body of judgement of center peak test
    	if (max_value > outlier){
    		peakMaxEval <- "significant"
+		cat ("    ----local enrichment: Significant----\n\n")
    	} else {
    		peakMaxEval <- "NS"
+		cat ("    ----local enrichment: Insignificant----\n\n")
    	}
    }else{
    	##case of no center peak
