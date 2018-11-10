@@ -1,10 +1,10 @@
 InfiniumDiffMetMotR
 ===================
-Version: 1.3
+Version: 1.4
 
 Description: This is a R package to analyze transcription factor binding motif enrichment at differentially methylated regions for Infinium Methylation BeadChip (Illumina).  
 
-Last Update: 2018-06-12  
+Last Update: 2018-11-09  
 
 Depends: R (>= 2.10), Biobase (>= 2.5.5)  
 
@@ -93,7 +93,7 @@ T    0    0    0    0.2486486    0.2594595    0.1027027    0.05945946    0.07027
  
 #### 4. Screening of enriched motifs  
 ```
-MotScr(infile="sel_processed_Mval.txt", motifDBList = motifDBList, cutoff = 2, p.cutoff = 0.001, outname="screening_result", ControlColnum=c(1,2), TreatmentColnum=c(3,4), MethylDemethyl="Demethyl", version = "850")
+MotScr(infile="sel_processed_Mval.txt", motifDBList = motifDBList, cutoff = 2, p.cutoff = 0.001, outname="screening_result", ControlColnum=c(1,2), TreatmentColnum=c(3,4), MethylDemethyl="Demethyl", sampling=FALSE, version = "850")
 ```
 infile: M-value matrix of infinium methylation array  
 motifDBList: list format of PWM  
@@ -101,7 +101,8 @@ cutoff: cutoff velue of delta M
 outname: name of output file  
 ControlColnum: A column of control data, such as unddiferentiated.  
 TreatmentColnum: A column of treatment data such as differentiated.  
-MethylDemethyl: "Methyl" (or "M") or "dimethyl (or"D").analysis target of differentially methylated probes.  
+MethylDemethyl: "Methyl" (or "M") or "dimethyl (or"D").analysis target of differentially methylated probes.
+sampling: number of randomly sampled differentiall methylated probes. "FALSE" analyses all differentially methylated probes. 
 version: "450" or "EPIC" (or "850"). version of methylation array.  
   
 If you perform a comparison of multiple samples, identification of differentially methylated probes uses both Welch's t-test and M-value difference. For single sample comparison, it uses only M-value difference (delta M).

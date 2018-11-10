@@ -8,7 +8,7 @@ motifDistMultiSeqs <- function(motif, fasta2=fasta2){ ##Run motifDistFromCpG fun
   half_length <- (width(fasta2[1])-1)/2
 
   ## Use multi-CPUs to compute distance from CpG
-  cl <- makeCluster(16,type="SOCK")
+  cl <- makeCluster(4,type="SOCK")
   clusterEvalQ(cl,library("Biostrings"))
   clusterExport(cl, "motifDistFromCpG", envir=environment())
   clusterExport(cl, "fasta2",envir=environment())
