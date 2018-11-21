@@ -15,7 +15,7 @@ Updated by: takahiro.suzuki.aa@riken.jp
 Install
 -------
 Install of dependent Bioconductor packages
-```
+```r
 source("https://bioconductor.org/biocLite.R")
 biocLite("FDb.InfiniumMethylation.hg19")
 biocLite("lumi")
@@ -23,7 +23,7 @@ biocLite("Biostrings")
 biocLite("BSgenome.Hsapiens.UCSC.hg19")
 ```
 Install of InfiniumDiffMetMotR from github
-```
+```r
 install.packages("devtools")
 require(devtools)
 install_github("takahirosuzuki1980/InfiniumDiffMetMotR")
