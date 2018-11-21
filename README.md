@@ -32,13 +32,12 @@ install_github("takahirosuzuki1980/InfiniumDiffMetMotR")
 Example
 -------
 #### 1. Load of InfiniumDiffMetMotR
-```
+```r
 library("InfiniumDiffMetMotR")
 ```
 
 #### 2. Normalization  
-```
-library(InfiniumDiffMetMotR)  
+```r
 lumiMethyNorm(fileName = "TableControl.txt", sample_names = sample_names)
 ```
 input unnourmalized-no background correction full infinium methylation array data.  
@@ -57,7 +56,7 @@ lumiMethyNorm generates **Process_Result folder**: reports of the normalization,
   
 #### 3. motif database construction  
 **Example 1: JASPER_CORE, Hsapiencs and Mmusclus**
-```
+```r
 library("MotifDb")
 targetDB <- "JASPAR_CORE"
 targetORG <- c("Hsapiens", "Mmusculus")
@@ -65,20 +64,20 @@ motifDB <- query(MotifDb, targetDB)        #extraction of motif list of "JASPER_
 motifDB <- c(query(motifDB,targetORG[1]),query(motifDB,targetORG[2]))        #extraction of motifs of "Hsapiens" and "Mmusclus"
 ```
 If you want analyze a specific motif select a motif. (ex. SPI1)
-```
+```r
 targetTF <- "SPI1"
 motifDB <- query(motifDB,targetTF)       #Extraction of motifs for target TF(s)
 ```
 Finally, convert the motif list to list format.
-```
+```r
 motifDBList <- as.list(motifDB)
 ```
 **Example 2: IMAGE motif database**
-```
+```r
 motifDBList <- IMAGE_PWMlist
 ```
 If you want to extract the motif of interest (e.g. SPI1):
-```
+```r
 motif_names <- "SPI1"
 motifDBList <- motifDBList[grep(motif_names,names(motifDBList))]
 ```
@@ -92,7 +91,7 @@ T    0    0    0    0.2486486    0.2594595    0.1027027    0.05945946    0.07027
   
  
 #### 4. Screening of enriched motifs  
-```
+```r
 MotScr(infile="sel_processed_Mval.txt", motifDBList = motifDBList, cutoff = 2, p.cutoff = 0.001, outname="screening_result", ControlColnum=c(1,2), TreatmentColnum=c(3,4), MethylDemethyl="Demethyl", sampling=FALSE, version = "850")
 ```
 infile: M-value matrix of infinium methylation array  
@@ -104,6 +103,23 @@ TreatmentColnum: A column of treatment data such as differentiated.
 MethylDemethyl: "Methyl" (or "M") or "dimethyl (or"D").analysis target of differentially methylated probes.
 sampling: number of randomly sampled differentiall methylated probes. "FALSE" analyses all differentially methylated probes. 
 version: "450" or "EPIC" (or "850"). version of methylation array.  
-  
-If you perform a comparison of multiple samples, identification of differentially methylated probes uses both Welch's t-test and M-value difference. For single sample comparison, it uses only M-value difference (delta M).
+
+ #### 5. output
+ - [outname]_mot_analysis_result.txt
+
+ result table
+ - [outname]_plot.pdf
+
+ all histograms, enrichment score plot, fold-change plot, and p-value plot
+ - [outname]_result.RData
+
+R data file
+ - [outname]_sig_plots directory
+
+a directory to store enrichment score plots of significantly enriched motifs
+ - [outname]_sig_plots directory/[motif_name].pdf
+
+enrichment score plots of significantly enriched motifs
+
+*If you perform a comparison of multiple samples, identification of differentially methylated probes uses both Welch's t-test and M-value difference. For single sample comparison, it uses only M-value difference (delta M).*
 
