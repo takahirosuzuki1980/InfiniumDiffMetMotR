@@ -1,4 +1,4 @@
-MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, cutoff = 2, p.cutoff = 0.001, outname="screening_result", ControlColnum, TreatmentColnum, MethylDemethyl="Demethyl", version = "450", sampling = FALSE){
+MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, cutoff = 2, p.cutoff = 0.001, outname="screening_result", ControlColnum, TreatmentColnum, MethylDemethyl="Demethyl", version = "850", sampling = FALSE){
 	#This function is a pipline to analyze enrichment of given motif PWMs in differentially methylated probes of illumina arrays.
 
 	cat("Reading data...\n")
@@ -113,7 +113,7 @@ MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, c
 	ResultOut <- paste(outname,'_mot_analysis_result.txt', sep="")
 	ResultOutR <- paste(outname,'_result.RData', sep="")
 	write.table (finOut, file=ResultOut, sep="\t", quote=F, row.names=F)
-	save(positionsList, target_positionsList, random_positionsList, file=ResultOutR)
+	save(nDMP_IDs, seq_range, outname, All_motif_names, positionsList, target_positionsList, random_positionsList, file=ResultOutR)
 	file.remove(tempDir)
 	cat("Completed!!\n")
 }
