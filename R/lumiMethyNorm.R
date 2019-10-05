@@ -42,14 +42,14 @@ lumiMethyNorm <- function(fileName = "TableControl.txt", idatpath = getwd(), inp
 	if(sample_names != FALSE){
 		sampleNames(data.lumiMethy) <- sample_names    #convert sampleID to sample name
 	}else if(toupper(inputtype) == "IDAT" && all(grepl("^GSM", sampleNames(data.lumiMethy)))){
-		cat("sample names are converted from GEO IDs to GEO sample titles.\n")
+		cat("\nsample names are converted from GEO IDs to GEO sample titles.\n")
 		idat_name <- sampleNames(data.lumiMethy)
 		idat_GEOid <- sapply(strsplit(idat_name, "_"), function(x){x[1]})
 		info_GEOList <- lapply(idat_GEOid, getGEO)
 		sample_names <- sapply(info_GEOList, function(x){Meta(x)$title})
 		sampleNames(data.lumiMethy) <- sample_names    #convert idat file it to sample title
 	}else if(toupper(inputtype) == "IDAT" && any(!grepl("^GSM", sampleNames(data.lumiMethy)))){
-		cat("At least one idat file name is not GEOID_barcode_location... format.\n")
+		cat("\nAt least one idat file name is not GEOID_barcode_location... format.\n")
 		cat("GEO sample title can not be downloaded.\n")
 	}
 
