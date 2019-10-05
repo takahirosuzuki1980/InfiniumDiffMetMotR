@@ -1,39 +1,71 @@
-MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, cutoff = 2, p.cutoff = 0.001, outname="screening_result", ControlColnum, TreatmentColnum, MethylDemethyl="Demethyl", version = "850", sampling = FALSE){
-	#This function is a pipline to analyze enrichment of given motif PWMs in differentially methylated probes of illumina arrays.
+#' PWM overrepresentation analysis pipline for illumina methylation array
+#' 
+#' pipline to analyze enrichment of given motif PWMs for differentially methylated region based on Illumina infinium methylation array data.
+#' 
+#' @param infile input file: normalized M-value matrix
+#' @param motifDBList PWM data list
+#' @param cutoff cutoff for delta-M-value
+#' @param p.cutoff cutoff for Welch's t-test
+#' @param outname output files ID
+#' @param ControlColnum column number for Control sample(s)
+#' @param TreatmentColnum  column number for target sample(s)
+#' @param MethylDemethyl direction of Ddifferentially methylated regions (methylated or demethylated)
+#' @param version version of Infinium Methjylation array (450 or 850(orEPIC))
+#' @param sampling If sampling number is indicated and DMP is more than sampling number, analysis is ran with randomly selected DMP. If FALSE, all DMPs are analyzed.
+#' 
+#' @import BSgenome.Hsapiens.UCSC.hg19
+#' @importFrom utils read.table write.table
+#' @importFrom stats runif na.omit
+#' @importFrom grDevices pdf dev.off
+#' 
+#' @return analysis summary files and plots, Rdata
+#' @keywords PWM, overrepresentation analysis
+#' @export
+
+MotScr <- function(infile = "sel_processed_Mval.txt", motifDBList, cutoff = 2, p.cutoff = 0.001, outname="screening_result", ControlColnum, TreatmentColnum, MethylDemethyl="Demethyl", version = "850", sampling = FALSE){
+	if(length(motifDBList) == 0) stop("motifDBList not found")
 
 	cat("Reading data...\n")
 	selDataMatrix <- read.table (infile)
 
 	cat("DMP identification...\n")
 	DMP_IDs <- DmpId(selDataMatrix=selDataMatrix, ControlColnum = ControlColnum, TreatmentColnum = TreatmentColnum, p.cutoff=p.cutoff, cutoff= cutoff, MethylDemethyl=MethylDemethyl)
-	if(!sampling == FALSE & length(DMP_IDs) >= sampling){ ##fast option: sampling of 300 DMPs
+	if(length(DMP_IDs) == 0) stop("No DMP!!")
+
+	if(!sampling == FALSE & length(DMP_IDs) >= sampling){    ##fast option
+		cat(paste0("Analysis will be run with ", sampling, "randomly selected DMPs."))
+		cat("\n")
 		DMP_IDs <- DMP_IDs[floor(runif(sampling,1,length(DMP_IDs)))]
 	}
+
 	nDMP_IDs <- length(DMP_IDs)
 	allProbe_IDs <- rownames(selDataMatrix)
 	if(version=="450"){
-		target_position <- na.omit(probeID2position(probe_IDs=DMP_IDs,anno_info=Methyl450anno))	#conversion of DMP IDs to position
-		randomProbe_IDs  <- stratSampling(target_IDs=DMP_IDs, Methyl450anno=Methyl450anno)	#stratified sampling for negative control
-		random_position<- na.omit(probeID2position(probe_IDs=randomProbe_IDs, anno_info=Methyl450anno))	#conversion of NC probe IDs to position
-		positionsList <- list("target" = target_position, "random" = random_position)    #integrate DMP positoins and NC positions
+		probe_annotation <- InfiniumDiffMetMotR::Methyl450anno
 	}else if ((version=="EPIC")||(version=="850")){
-		target_position <- na.omit(probeID2position(probe_IDs=DMP_IDs, anno_info=EPICanno))	#conversion of DMP IDs to position
-		randomProbe_IDs  <- stratSampling_EPIC(target_IDs=DMP_IDs, EPICanno=EPICanno)	#stratified sampling for negative control
-		random_position<- na.omit(probeID2position(probe_IDs=randomProbe_IDs, anno_info=EPICanno))	#conversion of NC probe IDs to position
-		positionsList <- list("target" = target_position, "random" = random_position)	#integrate DMP positoins and NC positions
+		probe_annotation <-InfiniumDiffMetMotR::EPICanno
 	}
 
+	target_position <- na.omit(probeID2position(probe_IDs=DMP_IDs,anno_info=probe_annotation))    #conversion of DMP IDs to position
+	randomProbe_IDs  <- stratSampling(target_IDs=DMP_IDs, anno_info=probe_annotation)    #stratified sampling for negative control
+	random_position<- na.omit(probeID2position(probe_IDs=randomProbe_IDs, anno_info=probe_annotation))    #conversion of NC probe IDs to position
+	positionsList <- list("target" = target_position, "random" = random_position)    #integrate DMP positoins and NC positions
+
+	##write DMP position
+	DMPtOutfile <- paste0(outname,'_DMP_position.txt')
+	out_target_position <- cbind(probeID = rownames(target_position), target_position)
+
+	write.table(out_target_position, file=DMPtOutfile, quote=FALSE, row.names=FALSE, col.names=TRUE)
+
 	## sequence extraction
-	##Read human hg19 genomic sequence
-	library("BSgenome.Hsapiens.UCSC.hg19")
-	tmp <- ls(paste("package", "BSgenome.Hsapiens.UCSC.hg19", sep=":"))
-	genome <- eval(parse(text=tmp))
-	cat("Retreave the sequences...\n")
+	## Read human hg19 genomic sequence
+	genome <- BSgenome.Hsapiens.UCSC.hg19
+	cat("\nGetting the sequences...\n")
 	seq_range <- c(-5000, 5000) #range from the CpG position to be extracted
 	sequences <- lapply(positionsList , function(x){seqExtract(positions = x, genome = genome, seq_range)})
 
 	##make a templrary outpput directory
-	tempDir <- paste(outname, "_temp", sep="")
+	tempDir <- paste0(outname, "_temp")
 	dir.create(tempDir)
 	##writing the sequences to splitted files
 	seqs <- sequences$target
@@ -44,7 +76,8 @@ MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, c
 	rm(seqs)
 	invisible(replicate(3, gc()))
 
-	cat(paste("motif serch: Total ", length(motifDBList), " motifs", sep=""))
+	cat("\n")
+	cat(paste0("motif serch: Total ", length(motifDBList), " motifs"))
 	cat("\n\tTarget regions...\n")
 	## ((multi-fasta file(multi-seqs) x motif) x [motif number])) x [multi-fasta file number]
 	target_positionsList <- splitSeqMotDist(filenames=target_all_filenames,  motif_list=motifDBList)
@@ -56,11 +89,11 @@ MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, c
 	file.remove(random_all_filenames)
 	gc()
 	
-	cat("Plotting the results...\n")
+	cat("\nPlotting the results...\n")
 	##Plot output setting
-	distPlotFile <- paste(outname,'_plot.pdf', sep="") ##output file name setting
+	distPlotFile <- paste0(outname,'_plot.pdf') ##output file name setting
 	pdf(distPlotFile)
-	sigPlotDir <- paste(outname,'_sig_plots', sep="")
+	sigPlotDir <- paste0(outname,'_sig_plots')
 	ifelse(!dir.exists(sigPlotDir), dir.create(sigPlotDir), FALSE) # make a directory for significantly enriched motifs
 	parameter_matrix <- NULL
 	All_motif_names <- names(motifDBList)
@@ -78,8 +111,8 @@ MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, c
 		## histogram plot
 		cat("    Step 1 / Plot Histgram (Figure 1)...\n")
 		motHist(target_mot_posi, ctrl_mot_posi, seq_range=seq_range, motif_name=motif_name)
+		
 		## motif enrichment score plot
-
 		cat("    Step 2 / Plot Enrichment Score (Figure 2)...\n")
 		enrichment_scores <- enrichScoreDist(target_mot_posi, ctrl_mot_posi, seq_range=seq_range, motif_name=motif_name, nDMP_IDs=nDMP_IDs, outname=outname, plot_draw=TRUE)
 
@@ -101,18 +134,17 @@ MotScr <- function(infile="sel_processed_Mval.txt", motifDBList = motifDBList, c
 		cat("    Step 7 / Significance test...\n")
 		parameters <- enrichTest(significant_ranges = significant_ranges, motif_counts_matrix = motif_counts_matrix, seq_range=seq_range, enrichment_scores=enrichment_scores,windowSize=windowSize)
 		ifelse(!parameters["peak.Test"] == "significant" &  file.exists(paste(outname,'_sig_plots/',motif_name,'.pdf', sep="")),
-		file.remove(paste(outname,'_sig_plots/', motif_name,'.pdf',
-		sep="")), FALSE)   ##remove the sig_plot_file if enrichment is not significant
+		file.remove(paste0(outname,'_sig_plots/', motif_name,'.pdf')), FALSE)   ##remove the sig_plot_file if enrichment is not significant
 		parameter_matrix <- rbind(parameter_matrix, parameters)
 	}
 	dev.off()
 
-	cat("Result table writing...\n")
+	cat("\nResult table writing...\n")
 	finOut <- cbind(names(motifDBList), ntarget_hits, nrandom_hits, parameter_matrix)
 	##out put file name setting
-	ResultOut <- paste(outname,'_mot_analysis_result.txt', sep="")
-	ResultOutR <- paste(outname,'_result.RData', sep="")
-	write.table (finOut, file=ResultOut, sep="\t", quote=F, row.names=F)
+	ResultOut <- paste0(outname,'_mot_analysis_result.txt')
+	ResultOutR <- paste0(outname,'_result.RData')
+	write.table(finOut, file=ResultOut, sep="\t", quote=F, row.names=F)
 	save(nDMP_IDs, seq_range, outname, All_motif_names, positionsList, target_positionsList, random_positionsList, file=ResultOutR)
 	file.remove(tempDir)
 	cat("Completed!!\n")
