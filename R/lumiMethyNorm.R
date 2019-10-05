@@ -19,12 +19,13 @@
 #' @importFrom utils write.table
 #' @importFrom Biobase write.exprs exprs sampleNames sampleNames<-
 #' @importFrom wateRmelon readEPIC
+#' @importFrom GEOquery getGEO Meta
 #' 
 #' @return normalized M-value
 #' @keywords Normalization, lumi, M-value
 #' @export
 
-lumiMethyNorm <- function(fileName = "TableControl.txt", idatpath = getwd(), inputtype, sample_names){	
+lumiMethyNorm <- function(fileName = "TableControl.txt", idatpath = getwd(), inputtype, sample_names=FALSE){	
 	if (missing(inputtype)) stop("inputtype notfound! 'signal' or 'idata'")
 
 	############### data input #############################
@@ -37,7 +38,21 @@ lumiMethyNorm <- function(fileName = "TableControl.txt", idatpath = getwd(), inp
 		data.lumiMethy <- as(data.mls, 'MethyLumiM')
 	}
 	addAnnotationInfo(data.lumiMethy, lib = 'FDb.InfiniumMethylation.hg19', annotationColumn=c('COLOR_CHANNEL', 'CHROMOSOME', 'POSITION'))
-	sampleNames(data.lumiMethy) <- sample_names	#convert the sampleID to sample name
+
+	if(sample_names != FALSE){
+		sampleNames(data.lumiMethy) <- sample_names    #convert sampleID to sample name
+	}else if(toupper(inputtype) == "IDAT" && all(grepl("^GSM", sampleNames(data.lumiMethy)))){
+		cat("sample names are converted from GEO IDs to GEO sample titles.\n")
+		idat_name <- sampleNames(data.lumiMethy)
+		idat_GEOid <- sapply(strsplit(idat_name, "_"), function(x){x[1]})
+		info_GEOList <- lapply(idat_GEOid, getGEO)
+		sample_names <- sapply(info_GEOList, function(x){Meta(x)$title})
+		sampleNames(data.lumiMethy) <- sample_names    #convert idat file it to sample title
+	}else if(toupper(inputtype) == "IDAT" && any(!grepl("^GSM", sampleNames(data.lumiMethy)))){
+		cat("At least one idat file name is not GEOID_barcode_location... format.\n")
+		cat("GEO sample title can not be downloaded.\n")
+	}
+
 	############### PCA plot ###################################
 	dir.create("Process_Result")    #make a directory to store the processing results
 	##PCA plot

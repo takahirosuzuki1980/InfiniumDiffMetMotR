@@ -30,4 +30,5 @@ Imports:
     IlluminaHumanMethylationEPICanno.ilm10b2.hg19,
     IlluminaHumanMethylationEPICmanifest,
     minfi,
-    methylumi
+    methylumi,
+    GEOquery

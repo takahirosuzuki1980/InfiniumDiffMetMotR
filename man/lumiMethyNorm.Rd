@@ -5,7 +5,7 @@
 \title{Infinium Normalization & M-value computation}
 \usage{
 lumiMethyNorm(fileName = "TableControl.txt", idatpath = getwd(),
-  inputtype, sample_names)
+  inputtype, sample_names = FALSE)
 }
 \arguments{
 \item{fileName}{unnourmalized intensity data}
