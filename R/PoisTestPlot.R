@@ -8,7 +8,8 @@
 #' @param motif_name PWM ID
 #' @param seq_range range to be analyzed
 #' 
-#' @importFrom graphics plot par
+#' @importFrom graphics plot
+#' @importFrom graphics par
 #' 
 #' @keywords Poisson test, p-value, plot
 #' @export

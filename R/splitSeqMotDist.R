@@ -24,7 +24,7 @@ splitSeqMotDist <- function(filenames, motif_list){
     fasta2 <- readDNAStringSet(i)    #read the multi-fasta file as DNAStringSet
     target_posi_subList <- pblapply(motif_list, function(x){motifDistMultiSeqs(motif = x, fasta2 = fasta2)})    #target_posi_subList is a list of lists of identified motif positions in a region for each motif.
     for (j in 1:length(target_posi_subList)){
-      target_positionsList[[j]] <- c(target_positionsList[[j]],target_posi_subList[[j]] )    #save the result to an List object
+      target_positionsList[[j]] <- c(target_positionsList[[j]],target_posi_subList[[j]])    #save the result to an List object
     }
     count <- count+1
     rm(fasta2)

@@ -4,10 +4,9 @@
 \alias{MotScr}
 \title{PWM overrepresentation analysis pipline for illumina methylation array}
 \usage{
-MotScr(infile = "sel_processed_Mval.txt", motifDBList, cutoff = 2,
-  p.cutoff = 0.001, outname = "screening_result", ControlColnum,
-  TreatmentColnum, MethylDemethyl = "Demethyl", version = "850",
-  sampling = FALSE)
+MotScr(infile, motifDBList, cutoff = 2, p.cutoff = 0.001,
+  outname = "screening_result", ControlColnum, TreatmentColnum,
+  MethylDemethyl = "Demethyl", version = "850", sampling = FALSE)
 }
 \arguments{
 \item{infile}{input file: normalized M-value matrix}

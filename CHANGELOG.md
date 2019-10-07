@@ -24,7 +24,10 @@
 ### Added
 - When using the sampling option, indicate it on standerd out
 - Output DMPs
-- idat files support as the input files
+- lumiMethyNorm support idat files as input
+- lumiMethyNorm returns a selDataMatrix object
+- MotScr support data.frame as input
+- getIdat2M function: get, normalize, and M-value conputation from GEO ID
 
 ### Fixed
 - Error with the case of DMR = 0/1

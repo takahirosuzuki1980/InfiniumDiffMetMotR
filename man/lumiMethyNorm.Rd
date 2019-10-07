@@ -17,7 +17,7 @@ lumiMethyNorm(fileName = "TableControl.txt", idatpath = getwd(),
 \item{sample_names}{a vetor of sample names}
 }
 \value{
-normalized M-value
+a object of normalized M-value
 }
 \description{
 Normalize the Infinium signal intensitty data and compute M-value.

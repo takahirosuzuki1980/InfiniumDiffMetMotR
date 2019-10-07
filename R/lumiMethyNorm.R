@@ -21,7 +21,7 @@
 #' @importFrom wateRmelon readEPIC
 #' @importFrom GEOquery getGEO Meta
 #' 
-#' @return normalized M-value
+#' @return a object of normalized M-value
 #' @keywords Normalization, lumi, M-value
 #' @export
 
@@ -89,4 +89,5 @@ lumiMethyNorm <- function(fileName = "TableControl.txt", idatpath = getwd(), inp
 	selDataMatrix <- dataMatrix[presentCount > 0,]
 	write.table(selDataMatrix, file="sel_processed_Mval.txt", sep="\t", quote=F)
 	cat("Normalization & M-value computation succeeded!\n")
+	return(selDataMatrix)
 }

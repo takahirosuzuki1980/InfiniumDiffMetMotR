@@ -22,11 +22,14 @@
 #' @keywords PWM, overrepresentation analysis
 #' @export
 
-MotScr <- function(infile = "sel_processed_Mval.txt", motifDBList, cutoff = 2, p.cutoff = 0.001, outname="screening_result", ControlColnum, TreatmentColnum, MethylDemethyl="Demethyl", version = "850", sampling = FALSE){
+MotScr <- function(infile, motifDBList, cutoff = 2, p.cutoff = 0.001, outname="screening_result", ControlColnum, TreatmentColnum, MethylDemethyl="Demethyl", version = "850", sampling = FALSE){
 	if(length(motifDBList) == 0) stop("motifDBList not found")
+	if(missing(infile)) stop("infile not found. data.frame or text file name.")
 
-	cat("Reading data...\n")
-	selDataMatrix <- read.table (infile)
+	if(is.character(infile) && grepl("txt$", infile)){    #read the M-value text file
+		cat("Reading M-value data...\n")
+		selDataMatrix <- read.table (infile, sep="\t")
+	}
 
 	cat("DMP identification...\n")
 	DMP_IDs <- DmpId(selDataMatrix=selDataMatrix, ControlColnum = ControlColnum, TreatmentColnum = TreatmentColnum, p.cutoff=p.cutoff, cutoff= cutoff, MethylDemethyl=MethylDemethyl)

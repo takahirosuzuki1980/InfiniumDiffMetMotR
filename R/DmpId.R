@@ -22,7 +22,7 @@
 DmpId <- function(selDataMatrix, ControlColnum, TreatmentColnum, p.cutoff = 0.05, cutoff = 2, MethylDemethyl = "Demethyl"){ 
 	if((length(ControlColnum) > 1)||(length(TreatmentColnum) > 1)){
 		## For comparison of muliple samples, run statistical test (welch t test)
-		cat("\tComparison of data sets\tUse Welch's T-test & dlta M\n")
+		cat("\tComparison of data sets...Use Welch's T-test & dlta M\n")
 
 		cl <- makeCluster(4,type="SOCK")
 		clusterExport(cl, "selDataMatrix", envir=environment())

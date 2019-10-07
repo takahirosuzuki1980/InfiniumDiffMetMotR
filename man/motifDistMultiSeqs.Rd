@@ -9,7 +9,7 @@ motifDistMultiSeqs(motif, fasta2)
 \arguments{
 \item{motif}{A PWM}
 
-\item{fasta2}{DNAStringSet sequnces}
+\item{fasta2}{A DNAStringSet sequnce}
 }
 \value{
 A list of identified motif positions in a region.
