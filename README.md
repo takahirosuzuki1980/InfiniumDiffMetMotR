@@ -83,7 +83,7 @@ motifDB <- c(query(motifDB,targetORG[1]),query(motifDB,targetORG[2]))        #ex
 If you want analyze a specific motif select a motif. (ex. SPI1)
 ```r
 targetTF <- "SPI1"
-motifDB <- query(motifDB,targetTF)       #Extraction of motifs for target TF(s)
+motifDB2 <- query(motifDB,targetTF)       #Extraction of motifs for target TF(s)
 ```
 Finally, convert the motif list to list format.
 ```r
@@ -92,6 +92,11 @@ motifDBList <- as.list(motifDB)
 #### - Example 2: IMAGE motif database
 ```r
 motifDBList <- IMAGE_PWMlist
+```
+If you want analyze a specific motif select a motif. (ex. SPI1)
+```r
+targetTF <- "SPI1"
+motifDBList <- IMAGE_PWMlist[grep(targetTF, names(IMAGE_PWMlist))]       #Extraction of motifs for target TF(s)
 ```
 
 Motif list should be a list of PWMs of following format;  
