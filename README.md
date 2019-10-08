@@ -105,7 +105,7 @@ T    0    0    0    0.2486486    0.2594595    0.1027027    0.05945946    0.07027
  
 ### 4. Screening of enriched motifs  
 ```r
-MotScr(infile="sel_processed_Mval.txt", motifDBList = motifDBList, cutoff = 2, p.cutoff = 0.001, outname="screening_result", ControlColnum=c(1,2), TreatmentColnum=c(3,4), MethylDemethyl="Demethyl", sampling=FALSE, version = "850")
+MotScr(infile=["sel_processed_Mval.txt" or selDataMatrix], motifDBList = [motif list( eg. motifDBList], cutoff = 2, p.cutoff = 0.05, outname="screening_result", ControlColnum=c(1,2), TreatmentColnum=c(3,4), MethylDemethyl="Demethyl", sampling=FALSE, version = "850")
 ```
 - ***infile: M-value of infinium methylation array. text file or data frame object***  
 - ***motifDBList: list format of PWM***  

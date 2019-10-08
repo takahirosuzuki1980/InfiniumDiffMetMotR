@@ -26,8 +26,9 @@ getIdat2M <- function(GEOid, sampleNames=FALSE){
         gunzip(filename = idat_files[i], destname = gsub("[.]gz$", "", idat_files[i]))
     }
 
-    lumiMethyNorm(idatpath=getwd(), inputtype = "idat")    #Normalization and M-value computation
+    selDataMatrix <- lumiMethyNorm(idatpath=getwd(), inputtype = "idat")    #Normalization and M-value computation
     setwd("../")
+    return(selDataMatrix)
 }
 
 
