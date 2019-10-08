@@ -20,6 +20,8 @@
 #' @importFrom Biobase write.exprs exprs sampleNames sampleNames<-
 #' @importFrom wateRmelon readEPIC
 #' @importFrom GEOquery getGEO Meta
+#' @importFrom methylumi betas methylated unmethylated pval.detect<-
+#' @importFrom minfi getAnnotationObject
 #' 
 #' @return a object of normalized M-value
 #' @keywords Normalization, lumi, M-value
@@ -27,6 +29,14 @@
 
 lumiMethyNorm <- function(fileName = "TableControl.txt", idatpath = getwd(), inputtype, sample_names=FALSE){	
 	if (missing(inputtype)) stop("inputtype notfound! 'signal' or 'idata'")
+
+	getAnnotationObject <- minfi::getAnnotationObject
+
+	betas <- methylumi::betas
+	methylated <- methylumi::methylated
+	unmethylated <- methylumi::unmethylated
+	"pval.detect<-" <- methylumi::"pval.detect<-"
+
 
 	############### data input #############################
 	cat("Reading data ...\n")

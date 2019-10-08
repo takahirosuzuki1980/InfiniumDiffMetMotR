@@ -21,6 +21,7 @@ getIdat2M <- function(GEOid, sampleNames=FALSE){
 
     ##Uncompress the idat files
     idat_files <- list.files(pattern = "idat.gz")
+    
     for(i in 1:length(idat_files)){
         gunzip(filename = idat_files[i], destname = gsub("[.]gz$", "", idat_files[i]))
     }

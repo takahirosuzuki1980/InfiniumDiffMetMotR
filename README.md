@@ -48,9 +48,9 @@ The header of the data should includes the following items as the following form
 - ***inputtype: "signal" for a row signal text data***  
 - ***sample_names: a vector of sample names***
 
-#### - idata files
+#### - idat files
 ```r
-selDataMatrix lumiMethyNorm(idatpath=getwd(), inputtype = "idat", sample_names = c("sample1", "sample2"))
+selDataMatrix <- lumiMethyNorm(idatpath=getwd(), inputtype = "idat", sample_names = c("sample1", "sample2"))
 ```
 - ***idatpath: A directory of idat files***  
 a set of idat file name should be
@@ -64,6 +64,11 @@ for example
 
 *lumiMethyNorm generates **Process_Result folder**: reports of the normalization, **processed_Mval.txt**: a matrix of M-value, and **sel_processed_Mval.txt**: a matrix of M-value which does not inculude low detection p-value probes. (default cut off is 0.01)*  
 
+#### - idat files from GEO
+```r
+selDataMatrix <- getIdat2M(GEOid = [GEO accession ID], sampleNames=FALSE)
+```
+For GEO entiry, you can directly download idat files and perform normalization and M-value computation by using getIdat2M function only with a GEO accession ID.
 
   
 ### 3. motif database construction  
