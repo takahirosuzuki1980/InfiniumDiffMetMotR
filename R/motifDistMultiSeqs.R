@@ -16,7 +16,7 @@
 motifDistMultiSeqs <- function(motif, fasta2){
 
   pfm_jaspar_fw <- motif #retreave a pfm from motifDB
-  pfm_jaspar_rv <- reverseComplement(pfm_jaspar_fw) #complementary pfm
+  pfm_jaspar_rv <- Biostrings::reverseComplement(pfm_jaspar_fw) #complementary pfm
   half_length <- (width(fasta2[1])-1)/2
 
   ## Use multi-CPUs to compute distance from CpG

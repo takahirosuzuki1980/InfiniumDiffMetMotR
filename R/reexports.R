@@ -6,6 +6,7 @@
 #' 
 #' @importFrom methylumi betas methylated unmethylated pval.detect<-
 #' @importFrom minfi getAnnotationObject
+#' @importMethodsFrom Biostrings reverseComplement width matchPWM start
 #' 
 #' @usage NA
 #' 
@@ -19,5 +20,13 @@ methylumi::methylated
 methylumi::unmethylated
 #' @export
 methylumi::"pval.detect<-"
+#' @export
+Biostrings::reverseComplement
+#' @export
+Biostrings::width
+#' @export
+Biostrings::matchPWM
+#' @export
+Biostrings::start
 
 
