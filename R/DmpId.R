@@ -20,7 +20,7 @@
 #' @export
 
 DmpId <- function(selDataMatrix, ControlColnum, TreatmentColnum, p.cutoff = 0.05, cutoff = 2, MethylDemethyl = "Demethyl"){ 
-	if((length(ControlColnum) > 1)||(length(TreatmentColnum) > 1)){
+	if((length(ControlColnum) > 1) && (length(TreatmentColnum) > 1)){
 		## For comparison of muliple samples, run statistical test (welch t test)
 		cat("\tComparison of data sets...Use Welch's T-test & dlta M\n")
 
@@ -40,7 +40,7 @@ DmpId <- function(selDataMatrix, ControlColnum, TreatmentColnum, p.cutoff = 0.05
 			diffIDs <- rownames(selDataMatrix)[which(dM <= -cutoff)]
 		}
 		DMP_IDs <- t.sigIDs[t.sigIDs %in% diffIDs]
-	}else{
+	}else if ((length(ControlColnum) == 1) && (length(TreatmentColnum) == 1)){
 		cat("\tComparison of single data\tUse dlta M\n")
 		if((MethylDemethyl == "Demethyl") ||( MethylDemethyl == "D")) {
 			diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) >= cutoff)
@@ -48,7 +48,10 @@ DmpId <- function(selDataMatrix, ControlColnum, TreatmentColnum, p.cutoff = 0.05
 			diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) <=-cutoff) 
 		}
 		DMP_IDs <- rownames(selDataMatrix)[diff_table]
+	}else{
+		stop ("Indicate multiple control columns and multiple tretment columns, or singel control column and single treatment column")
 	}
+	
 	nDMPs <- paste0("\t<", length(DMP_IDs), " DMPs were identified>", "\n")
 	cat(nDMPs)
 	return(DMP_IDs)
