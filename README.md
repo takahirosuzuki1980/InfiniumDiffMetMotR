@@ -37,7 +37,7 @@ library("InfiniumDiffMetMotR")
 ```r
 selDataMatrix <- lumiMethyNorm(fileName = "TableControl.txt", inputtype = "signal", sample_names = c("sample1", "sample2"))
 ```
-- ***filename: unnourmalized-no background
+- ***filename: unnourmalized-no background***
 correction full infinium methylation array data.***  
 The header of the data should includes the following items as the following formats;  
 **TargetID    Sample1.Signal_A    Sample1.Signal_B    Sample1.Detection Pval**  
@@ -66,9 +66,14 @@ for example
 
 #### - idat files from GEO
 ```r
-selDataMatrix <- getIdat2M(GEOid = [GEO accession ID], sampleNames=FALSE)
+selDataMatrix <- getIdat2M(GEOid = GSE100825, version = "EPIC", sampleNames=FALSE)
 ```
-For GEO entiry, you can directly download idat files and perform normalization and M-value computation by using getIdat2M function only with a GEO accession ID.
+- ***GEOid: a GEO accession ID***
+- ***version: "27" or "450" or "EPC" or a vactor of multiple versions***
+- ***sampleNames: If"FALSE", sample names are automatically downloaded and converted to GEO sample title baed on the file name.***  
+
+For a GEO entry, you can directly download idat files and perform normalization and M-value computation by using getIdat2M function only with a GEO accession ID.  
+If multiple version of idat files are registered in a GEO entiry, you cchoose a version(s) to be analyzed. If you choose multiple versions, the out put object is list of M-value data.frames.
 
   
 ### 3. motif database construction  

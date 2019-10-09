@@ -4,15 +4,17 @@
 \alias{getIdat2M}
 \title{GetGEO idat file & M-value conversion}
 \usage{
-getIdat2M(GEOid, sampleNames = FALSE)
+getIdat2M(GEOid, version, sampleNames = FALSE)
 }
 \arguments{
 \item{GEOid}{GEO ID}
 
+\item{version}{type of array version for analysis.}
+
 \item{sampleNames}{a vector of sampeNamse. If "FALSE", sample namses use GEO sample titles.}
 }
 \value{
-Normalized M-value text files
+Normalized M-value text files List.
 }
 \description{
 Downloads idat files based given GEO ID, normalzies, and computes M-values.
