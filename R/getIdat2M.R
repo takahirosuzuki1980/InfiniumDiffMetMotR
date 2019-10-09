@@ -85,7 +85,7 @@ getIdat2M <- function(GEOid, version, sampleNames=FALSE){
         }
         setwd("../")
     }
-    setwd("original_dir")
+    setwd(original_dir)
 
     ## Return object depends on indicated version length
     if (length(version) == 1){
