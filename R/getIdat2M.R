@@ -13,6 +13,7 @@
 #' @keywords GEO idat Normalization M-value
 #' @export
 
+
 getIdat2M <- function(GEOid, version, sampleNames=FALSE){
     original_dir <- getwd()
     getGEOSuppFiles(GEOid)    #get supplimentary files
