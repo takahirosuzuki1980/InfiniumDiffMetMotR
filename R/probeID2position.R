@@ -14,10 +14,10 @@ probeID2position <- function (probe_IDs, anno_info = InfiniumDiffMetMotR::EPICan
   ##conversion of target probe IDs to positions
   probes <- probe_IDs
   probes_anno <- anno_info[(anno_info[,1] %in% probes), ]
-  CHR37 <- sapply(probes, function(x){probes_anno[probes_anno[,1] %in% x, "CHR"]})
+  CHR37 <- probes_anno[probes_anno[,1] %in% probes, "CHR"]
   CHR37 <- paste("chr", CHR37, sep="")
-  CPG37 <- sapply(probes, function(x){probes_anno[probes_anno[,1] %in% x, "MAPINFO"]})
-  positions <- cbind(CHR37, CPG37)
+  CPG37 <- as.numeric(probes_anno[probes_anno[,1] %in% probes, "MAPINFO"])
+  positions <- data.frame(CHR37, CPG37)
   rownames(positions) <- probes
   return(positions)
 }
