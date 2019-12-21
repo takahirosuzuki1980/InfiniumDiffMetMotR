@@ -1,40 +1,54 @@
-stratSampling <- function(target_IDs, Methyl450anno=Methyl450anno){	#stratified sampling based on DMPs. categolies are CpG island, CpG shore and non-CGI/non-shore
+#' Stratified sampling
+#' 
+#' stratified sampling of same number of target probes based on annotation categolies of target probes(TSS200, CGI, CpG shore, CpG shelf, and other region)
+#' 
+#' @param target_IDs methylation array IDs of DMP
+#' @param anno_info annotation infromation of probe
+#' 
+#' @importFrom stats runif
+#' 
+#' @return probe IDs
+#' 
+#' @keywords stratified sampling, random
+#' @export
+
+stratSampling <- function(target_IDs, anno_info=InfiniumDiffMetMotR::EPICanno){
  ##Categolization of all probes into the categolies
-  all.TSS.probes <- as.vector(Methyl450anno[unique(c(grep("TSS200", Methyl450anno[,"UCSC_RefGene_Group"]), grep("5'UTR", Methyl450anno[,"UCSC_RefGene_Group"]))),"IlmnID"])#identification of all TSS probes
-  all.nonTSS <- Methyl450anno[!(Methyl450anno[,"IlmnID"] %in% all.TSS.probes),]
-  all.CGI.probes <- as.vector(all.nonTSS[grep("Island", all.nonTSS[,"Relation_to_UCSC_CpG_Island"]),"IlmnID"])#identification of all CGI probes
-  all.shore.probes <- as.vector(all.nonTSS[grep("Shore", all.nonTSS[,"Relation_to_UCSC_CpG_Island"]),"IlmnID"]) #identification of all shore probes
-  all.shelf.probes <- as.vector(all.nonTSS[grep("Shelf", all.nonTSS[,"Relation_to_UCSC_CpG_Island"]),"IlmnID"]) #identification of all shelf probes
-  all.other.probes <- setdiff(setdiff(setdiff(setdiff(Methyl450anno[,"IlmnID"],all.TSS.probes), all.CGI.probes), all.shore.probes),all.shelf.probes)  #identification of all non-TSS, non-CGI, non-shore probes
+  all.TSS.probes <- as.vector(anno_info[unique(c(grep("TSS200", anno_info[,"UCSC_RefGene_Group"]), grep("5'UTR", anno_info[,"UCSC_RefGene_Group"]))),"IlmnID"])    #identification of all TSS probes
+  all.nonTSS <- anno_info[!(anno_info[,"IlmnID"] %in% all.TSS.probes),]
+  all.CGI.probes <- as.vector(all.nonTSS[grep("Island", all.nonTSS[,"Relation_to_UCSC_CpG_Island"]),"IlmnID"])    #identification of all CGI probes
+  all.shore.probes <- as.vector(all.nonTSS[grep("Shore", all.nonTSS[,"Relation_to_UCSC_CpG_Island"]),"IlmnID"])    #identification of all shore probes
+  all.shelf.probes <- as.vector(all.nonTSS[grep("Shelf", all.nonTSS[,"Relation_to_UCSC_CpG_Island"]),"IlmnID"])    #identification of all shelf probes
+  all.other.probes <- setdiff(setdiff(setdiff(setdiff(anno_info[,"IlmnID"],all.TSS.probes), all.CGI.probes), all.shore.probes),all.shelf.probes)    #identification of all non-TSS, non-CGI, non-shore probes
 
   ##number of probes in each categolies
-  nall.TSS.probes <- length(all.TSS.probes) #number of all CGI probes
-  nall.CGI.probes <- length(all.CGI.probes) #number of all CGI probes
-  nall.shore.probes <- length(all.shore.probes) #number of all shore probes
-  nall.shelf.probes <- length(all.shelf.probes) #number of all shelf probes
-  nall.other.probes <- length (all.other.probes)  #number of all non-CGI/non-shore/probes
+  nall.TSS.probes <- length(all.TSS.probes)    #number of all CGI probes
+  nall.CGI.probes <- length(all.CGI.probes)    #number of all CGI probes
+  nall.shore.probes <- length(all.shore.probes)    #number of all shore probes
+  nall.shelf.probes <- length(all.shelf.probes)    #number of all shelf probes
+  nall.other.probes <- length (all.other.probes)    #number of all non-CGI/non-shore/probes
 
 
   ## identification of DMPs in each categolies (TSS, CpG Island, CpG Shore, others)
-  TSS.probes <- target_IDs[target_IDs %in% all.TSS.probes]  #identification of TSS DMPs
-  CGI.probes <- target_IDs[target_IDs %in% all.CGI.probes]	#identification of CGI DMPs within non-TSS probes
-  shore.probes <- target_IDs[target_IDs %in% all.shore.probes]	#identification of shore DMPs within non-TSS probes
-  shelf.probes <- target_IDs[target_IDs %in% all.shelf.probes] #identification of shelf DMPs within non-TSS probes
-  other.probes <- target_IDs[target_IDs %in% all.other.probes]  #identification of non-TSS, non-CGI, non-shore probes
+  TSS.probes <- target_IDs[target_IDs %in% all.TSS.probes]    #identification of TSS DMPs
+  CGI.probes <- target_IDs[target_IDs %in% all.CGI.probes]    #identification of CGI DMPs within non-TSS probes
+  shore.probes <- target_IDs[target_IDs %in% all.shore.probes]    #identification of shore DMPs within non-TSS probes
+  shelf.probes <- target_IDs[target_IDs %in% all.shelf.probes]    #identification of shelf DMPs within non-TSS probes
+  other.probes <- target_IDs[target_IDs %in% all.other.probes]    #identification of non-TSS, non-CGI, non-shore probes
 
   ## number of DMPs in each categilies
-  nTSS.probes <- length(TSS.probes) #number of CGI DMPs
-  nCGI.probes <- length(CGI.probes)	#number of CGI DMPs
-  nshore.probes <- length(shore.probes)	#number of shore DMPs
-  nshelf.probes <- length(shelf.probes) #number of shore DMPs
-  nnonCGI.probes <- length(other.probes)	#number of non-CGI/non-shore DMPs
+  nTSS.probes <- length(TSS.probes)    #number of CGI DMPs
+  nCGI.probes <- length(CGI.probes)    #number of CGI DMPs
+  nshore.probes <- length(shore.probes)    #number of shore DMPs
+  nshelf.probes <- length(shelf.probes)    #number of shore DMPs
+  nnonCGI.probes <- length(other.probes)    #number of non-CGI/non-shore DMPs
 
   ##ramdom sampling from each categolies
-  run.TSS.probes <- all.TSS.probes[floor(runif(nTSS.probes, 1, nall.TSS.probes))] #TSS probes
-  run.CGI.probes <- all.CGI.probes[floor(runif(nCGI.probes, 1 ,nall.CGI.probes))]	#CGI probes
-  run.shore.probes <- all.shore.probes[floor(runif(nshore.probes, 1 ,nall.shore.probes))]	#shore probes
-  run.shelf.probes <- all.shore.probes[floor(runif(nshelf.probes, 1 ,nall.shelf.probes))] #shelf probes
-  run.other.probes <- all.other.probes[floor(runif(nnonCGI.probes, 1 ,nall.other.probes))] 	#other probes
-  run.probes <- c(run.TSS.probes, run.CGI.probes, run.shore.probes, run.shelf.probes, run.other.probes)
-  return (run.probes)
+  ran.TSS.probes <- all.TSS.probes[floor(runif(nTSS.probes, 1, nall.TSS.probes))]    #TSS probes
+  ran.CGI.probes <- all.CGI.probes[floor(runif(nCGI.probes, 1 ,nall.CGI.probes))]    #CGI probes
+  ran.shore.probes <- all.shore.probes[floor(runif(nshore.probes, 1 ,nall.shore.probes))]    #shore probes
+  ran.shelf.probes <- all.shore.probes[floor(runif(nshelf.probes, 1 ,nall.shelf.probes))]    #shelf probes
+  ran.other.probes <- all.other.probes[floor(runif(nnonCGI.probes, 1 ,nall.other.probes))]    #other probes
+  ran.probes <- c(ran.TSS.probes, ran.CGI.probes, ran.shore.probes, ran.shelf.probes, ran.other.probes)
+  return (ran.probes)
 }

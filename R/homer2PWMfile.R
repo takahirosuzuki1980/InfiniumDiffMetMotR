@@ -1,3 +1,12 @@
+#' Homer PWM to PWM for InfiniumDiffMetMotR
+#' 
+#' @param file homer PWM file
+#' 
+#' @return PWM list for InfiniumDiffMetMotR
+#' 
+#' @keywords homer, InfiniumDiffMetMotR, PWM
+#' @export
+
 homer2PWMfile <- function(file){
 	table <- read.table(file=file, fill=T, row.names=NULL, header=F)
 	table.vector <- cbind(as.vector(table[[1]]), as.vector(table[[2]]), as.vector(table[[3]]), as.vector(table[[4]]))
