@@ -18,6 +18,6 @@ probeID2position <- function (probe_IDs, anno_info = InfiniumDiffMetMotR::EPICan
   CHR37 <- paste("chr", CHR37, sep="")
   CPG37 <- as.numeric(probes_anno[probes_anno[,1] %in% probes, "MAPINFO"])
   positions <- data.frame(CHR37, CPG37)
-  rownames(positions) <- probes
+  rownames(positions) <- probes_anno[,"IlmnID"]
   return(positions)
 }
