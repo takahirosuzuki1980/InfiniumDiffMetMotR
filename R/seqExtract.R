@@ -23,6 +23,6 @@ seqExtract<- function(positions, genome, seq_range = c(-5000, 5000)){ #sequence 
   seqRange <- data.frame(chrom, start, end)
   seqRange <- seqRange[(as.numeric(seqRange[,2]) >= 0) & (as.numeric(seqRange[,3]) <= seq_length[seqRange[,1]]), , drop=F]
   fasta2 <- DNAStringSet(getSeq(genome, name=seqRange[,1], start=as.numeric(seqRange[,2]), end=as.numeric(seqRange[,3])))
-  names(fasta2) <- rownames(positions)
+  names(fasta2) <- rownames(seqRange)
   return (fasta2)
 }

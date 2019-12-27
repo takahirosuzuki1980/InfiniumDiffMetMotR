@@ -31,3 +31,8 @@
 
 ### Fixed
 - Error with the case of DMR = 0/1
+
+## [1.5.1] - 2019-12-27
+### Fixed
+- debug of probeID2position.R
+- debug of seqExtract.R
