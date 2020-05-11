@@ -26,7 +26,7 @@
 #' @keywords Normalization, lumi, M-value
 #' @export
 
-lumiMethyNorm <- function(fileName = "TableControl.txt", idatpath = getwd(), inputtype, sample_names=FALSE){	
+lumiMethyNorm <- function(fileName = "TableControl.txt", idatpath = getwd(), inputtype, sample_names=FALSE, force = TRUE){	
 	if (missing(inputtype)) stop("inputtype notfound! 'signal' or 'idata'")
 
 	############### data input #############################
@@ -35,7 +35,7 @@ lumiMethyNorm <- function(fileName = "TableControl.txt", idatpath = getwd(), inp
 	if(toupper(inputtype) == "SIGNAL"){
 		data.lumiMethy <- lumiMethyR(fileName)
 	}else if(toupper(inputtype) == "IDAT"){
-		data.mls <- readEPIC(idatPath=getwd())
+		data.mls <- readEPIC(idatPath=getwd(), force = force)
 		data.lumiMethy <- as(data.mls, 'MethyLumiM')
 	}
 	addAnnotationInfo(data.lumiMethy, lib = 'FDb.InfiniumMethylation.hg19', annotationColumn=c('COLOR_CHANNEL', 'CHROMOSOME', 'POSITION'))

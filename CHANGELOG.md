@@ -36,3 +36,7 @@
 ### Fixed
 - debug of probeID2position.R
 - debug of seqExtract.R
+
+## [1.5.2] - 2020-05-11
+### Fixed
+- add "force" option to lumiMethyNorm.R, which is inherited option from readEPIC
