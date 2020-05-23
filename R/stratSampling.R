@@ -44,11 +44,13 @@ stratSampling <- function(target_IDs, anno_info=InfiniumDiffMetMotR::EPICanno){
   nnonCGI.probes <- length(other.probes)    #number of non-CGI/non-shore DMPs
 
   ##ramdom sampling from each categolies
+  set.seed(123)
   ran.TSS.probes <- all.TSS.probes[floor(runif(nTSS.probes, 1, nall.TSS.probes))]    #TSS probes
   ran.CGI.probes <- all.CGI.probes[floor(runif(nCGI.probes, 1 ,nall.CGI.probes))]    #CGI probes
   ran.shore.probes <- all.shore.probes[floor(runif(nshore.probes, 1 ,nall.shore.probes))]    #shore probes
   ran.shelf.probes <- all.shore.probes[floor(runif(nshelf.probes, 1 ,nall.shelf.probes))]    #shelf probes
   ran.other.probes <- all.other.probes[floor(runif(nnonCGI.probes, 1 ,nall.other.probes))]    #other probes
   ran.probes <- c(ran.TSS.probes, ran.CGI.probes, ran.shore.probes, ran.shelf.probes, ran.other.probes)
+  set.seed(NULL)
   return (ran.probes)
 }

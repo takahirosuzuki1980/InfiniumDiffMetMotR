@@ -40,3 +40,7 @@
 ## [1.5.2] - 2020-05-11
 ### Fixed
 - add "force" option to lumiMethyNorm.R, which is inherited option from readEPIC
+
+## [1.5.3] - 2020-05-23
+### Updated
+- add "set.seed" to stratSampling.R to fix the randomization
