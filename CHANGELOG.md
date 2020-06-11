@@ -44,3 +44,7 @@
 ## [1.5.3] - 2020-05-23
 ### Updated
 - add "set.seed" to stratSampling.R to fix the randomization
+
+## [1.5.4] - 2020-06-11
+### Updated
+- singel data vs multiple data-compliant

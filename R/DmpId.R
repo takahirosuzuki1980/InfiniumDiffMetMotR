@@ -22,7 +22,7 @@
 DmpId <- function(selDataMatrix, ControlColnum, TreatmentColnum, p.cutoff = 0.05, cutoff = 2, MethylDemethyl = "Demethyl"){ 
 	if((length(ControlColnum) > 1) && (length(TreatmentColnum) > 1)){
 		## For comparison of muliple samples, run statistical test (welch t test)
-		cat("\tComparison of data sets...Use Welch's T-test & dlta M\n")
+		cat("\tComparison between multiple data sets...Use Welch's T-test & dlta M\n")
 
 		cl <- makeCluster(4,type="SOCK")
 		clusterExport(cl, "selDataMatrix", envir=environment())
@@ -39,18 +39,50 @@ DmpId <- function(selDataMatrix, ControlColnum, TreatmentColnum, p.cutoff = 0.05
 		}else if ((MethylDemethyl == "Methyl" )||(MethylDemethyl == "M")){
 			diffIDs <- rownames(selDataMatrix)[which(dM <= -cutoff)]
 		}
+
 		DMP_IDs <- t.sigIDs[t.sigIDs %in% diffIDs]
+
 	}else if ((length(ControlColnum) == 1) && (length(TreatmentColnum) == 1)){
-		cat("\tComparison of single data\tUse dlta M\n")
+		cat("\tComparison between single data\tUse dlta M\n")
+
 		if((MethylDemethyl == "Demethyl") ||( MethylDemethyl == "D")) {
-			diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) >= cutoff)
+			diff_table <- which((selDataMatrix[,ControlColnum] - selDataMatrix[,TreatmentColnum]) >= cutoff)
+
 		}else if ((MethylDemethyl == "Methyl" )||(MethylDemethyl == "M")){
-			diff_table <- which((selDataMatrix[,ControlColnum]-selDataMatrix[,TreatmentColnum]) <=-cutoff) 
+			diff_table <- which((selDataMatrix[,ControlColnum] - selDataMatrix[,TreatmentColnum]) <=-cutoff) 
 		}
+
 		DMP_IDs <- rownames(selDataMatrix)[diff_table]
-	}else{
-		stop ("Indicate multiple control columns and multiple tretment columns, or singel control column and single treatment column")
-	}
+
+	}else if ((length(ControlColnum) == 1) && (length(TreatmentColnum) > 1)){
+		cat("\tComparison between single control data and ultiple treatment data\tUse dlta M with mean M of treatment\n")
+
+		treat_mean_M <- rowMeans(selDataMatrix[,TreatmentColnum])
+
+		if((MethylDemethyl == "Demethyl") ||( MethylDemethyl == "D")) {
+			diff_table <- which((selDataMatrix[,ControlColnum] - treat_mean_M ) >= cutoff)
+
+		}else if ((MethylDemethyl == "Methyl" )||(MethylDemethyl == "M")){
+			diff_table <- which((selDataMatrix[,ControlColnum] - treat_mean_M ) <=-cutoff) 
+		}
+
+		DMP_IDs <- rownames(selDataMatrix)[diff_table]
+
+	}else if ((length(ControlColnum) > 1) && (length(TreatmentColnum) == 1)){
+		cat("\tComparison between multiple control data and single treatment data\tUse dlta M with mean M of control\n")
+
+		ctrl_mean_M <- rowMeans(selDataMatrix[,,ControlColnum])
+
+		if((MethylDemethyl == "Demethyl") ||( MethylDemethyl == "D")) {
+			diff_table <- which((ctrl_mean_M - selDataMatrix[,TreatmentColnum] ) >= cutoff)
+
+		}else if ((MethylDemethyl == "Methyl" )||(MethylDemethyl == "M")){
+			diff_table <- which((ctrl_mean_M - selDataMatrix[,TreatmentColnum] ) <=-cutoff)
+		}
+
+		DMP_IDs <- rownames(selDataMatrix)[diff_table]
+
+	}else stop ("Comparison is not correct\n")
 	
 	nDMPs <- paste0("\t<", length(DMP_IDs), " DMPs were identified>", "\n")
 	cat(nDMPs)
