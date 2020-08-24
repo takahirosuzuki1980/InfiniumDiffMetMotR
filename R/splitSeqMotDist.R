@@ -15,7 +15,7 @@
 #' @keywords PWM, motif seaech
 #' @export
 
-splitSeqMotDist <- function(filenames, motif_list){
+splitSeqMotDist <- function(filenames, motif_list,  min.score){
     target_positionsList <- lapply(1:length(motif_list), function(i){ numeric() }) #an object to save result of motif search for all motifs
     names(target_positionsList) <- names(motif_list)
     count <- 1
