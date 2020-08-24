@@ -1,9 +1,9 @@
 Package: InfiniumDiffMetMotR
 Type: Package
 Title: Motif Overrepresentation analysis for Illumina Methylation Arrays
-Version: 1.5.4
+Version: 1.5.5
 Author: Takahiro Suzuki
-Maintainer: The package maintainer <takahirosuzuki1980@gmail.com>
+Maintainer: The package maintainer <takahirosuzuki0626@gmail.com>
 Description: The InfiniumDiffMetMotR package provides an integrated analysis pipeline for Illumina infinium methylation array. It inculdes functions of normaluzation,  M-value computation, differentially methylation analysis, and motif overrepresentation analysis for the differentially methylated regions. It is also included motif data base such as JASPAR CORE and IMAGE. 
 Depends: R (>= 2.10)
 License: LGPL (>= 2)

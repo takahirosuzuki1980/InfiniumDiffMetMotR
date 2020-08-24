@@ -48,3 +48,7 @@
 ## [1.5.4] - 2020-06-11
 ### Updated
 - singel data vs multiple data-compliant
+
+## [1.5.5] - 2020-08-24
+### Updated
+- min.score paraneter of MachPWM is variable
