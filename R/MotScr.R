@@ -30,7 +30,8 @@ MotScr <- function(infile,
     ControlColnum, TreatmentColnum,
     MethylDemethyl = "Demethyl",
     version = "850",
-    sampling = FALSE, min.score = "90%"
+    sampling = FALSE, 
+	min.score = "90%"
     ){
     if(length(motifDBList) == 0) stop("motifDBList not found")
     if(missing(infile)) stop("infile not found. data.frame or text file name.")
