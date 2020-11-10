@@ -10,6 +10,7 @@ License: LGPL (>= 2)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
+biocViews:
 Imports: 
     BSgenome.Hsapiens.UCSC.hg19,
     FDb.InfiniumMethylation.hg19,
