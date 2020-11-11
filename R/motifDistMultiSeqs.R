@@ -14,7 +14,7 @@
 #' @keywords PWM, motif seaech, parallel
 
 
-motifDistMultiSeqs <- function(motif, fasta2, min.score){
+motifDistMultiSeqs <- function(motif, fasta2, min.score = "90%"){
 
     pfm_jaspar_fw <- motif #retreave a pfm from motifDB
     pfm_jaspar_rv <- Biostrings::reverseComplement(pfm_jaspar_fw) #complementary pfm
