@@ -14,12 +14,30 @@ Updated by: takahiro.suzuki.aa@riken.jp
 
 ## Install
 ---
-## 1. Install of devtools
+## 1. Install bioconductor packages
+```r
+pkgs <- c("BSgenome.Hsapiens.UCSC.hg19", 
+   "FDb.InfiniumMethylation.hg19", 
+   "lumi", 
+   "wateRmelon", 
+   "IlluminaHumanMethylationEPICanno.ilm10b2.hg19",
+   "IlluminaHumanMethylationEPICmanifest",
+   "minfi",
+   "methylumi",
+   "GEOquery")
+   
+
+if (!requireNamespace("BiocManager", quietly = TRUE))
+   install.packages("BiocManager")
+BiocManager::install(pkgs, update = F)
+
+```
+## 2. Install of devtools
 devtools needs to install packages from github
 ```r
 install.packages("devtools")
 ```
-## 2. Install of InfiniumDiffMetMotR from github
+## 3. Install of InfiniumDiffMetMotR from github
 ```r
 devtools::install_github("takahirosuzuki1980/InfiniumDiffMetMotR")
 ```
