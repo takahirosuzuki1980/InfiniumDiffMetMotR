@@ -35,7 +35,7 @@ lumiMethyNorm <- function(fileName = "TableControl.txt", idatpath = getwd(), inp
 	if(toupper(inputtype) == "SIGNAL"){
 		data.lumiMethy <- lumiMethyR(fileName)
 	}else if(toupper(inputtype) == "IDAT"){
-		data.mls <- readEPIC(idatPath=getwd(), force = force)
+		data.mls <- readEPIC(idatPath=idatpath, force = force)
 		data.lumiMethy <- as(data.mls, 'MethyLumiM')
 	}
 	addAnnotationInfo(data.lumiMethy, lib = 'FDb.InfiniumMethylation.hg19', annotationColumn=c('COLOR_CHANNEL', 'CHROMOSOME', 'POSITION'))
