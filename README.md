@@ -4,7 +4,7 @@ Version: 1.5.5
 
 Description: This is a R package to analyze transcription factor binding motif enrichment at differentially methylated regions for Infinium Methylation BeadChip (Illumina).  
 
-Last Update: 2020-08-24  
+Last Update: 2021-03-31  
 
 Depends: R (>= 2.10), Biobase (>= 2.5.5)  
 
